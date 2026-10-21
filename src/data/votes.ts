@@ -22,7 +22,7 @@ export const VOTES: Record<string, Vote> = {
       ps: 'Pour la censure (unanime)',
       ecologistes: 'Pour la censure (unanime)',
       pcf: 'Pour la censure (unanime)',
-      lr: 'Divisé : 19 députés sur 61 ont voté la censure',
+      lr: 'Divisé : 19 députés sur 61 ont voté la censure',
       renaissance: 'N’a pas voté la censure (soutien à la réforme)',
       modem: 'N’a pas voté la censure (soutien à la réforme)',
       horizons: 'N’a pas voté la censure (soutien à la réforme)',
@@ -131,7 +131,7 @@ export const VOTES: Record<string, Vote> = {
     titre: 'Censure du gouvernement Barnier (2024)',
     date: '2024-12-04',
     resume:
-      'Après un 49.3 sur le budget de la Sécurité sociale, la motion de censure est adoptée avec 331 voix : le gouvernement tombe, une première depuis 1962.',
+      'Après un 49.3 sur le budget de la Sécurité sociale, la motion de censure est adoptée avec 331 voix : le gouvernement tombe, une première depuis 1962.',
     positions: {
       rn: 'Pour la censure (unanime)',
       lfi: 'Pour la censure (unanime)',
@@ -157,7 +157,7 @@ export const VOTES: Record<string, Vote> = {
     titre: 'Loi sur l’aide à mourir (2025-2026)',
     date: '2025-05-27',
     resume:
-      'Volet soins palliatifs adopté à la quasi-unanimité. Volet aide à mourir, bien plus clivant : adopté définitivement le 15 juillet 2026 (291 pour, 241 contre). Positions ci-dessous en première lecture.',
+      'Volet soins palliatifs adopté à la quasi-unanimité. Volet aide à mourir, bien plus clivant : adopté définitivement le 15 juillet 2026 (291 pour, 241 contre). Positions ci-dessous en première lecture.',
     positions: {
       lfi: 'Pour (quasi unanime)',
       ps: 'Pour (quasi unanime)',
@@ -179,7 +179,7 @@ export const VOTES: Record<string, Vote> = {
     titre: 'Loi Duplomb (2025)',
     date: '2025-07-08',
     resume:
-      'Adoptée par 316 voix pour, 223 contre. Le Conseil constitutionnel a censuré la réintroduction de l’acétamipride, un pesticide interdit ; une pétition contre le texte a dépassé 2,1 millions de signatures.',
+      'Adoptée par 316 voix pour, 223 contre. Le Conseil constitutionnel a censuré la réintroduction de l’acétamipride, un pesticide interdit ; une pétition contre le texte a dépassé 2,1 millions de signatures.',
     positions: {
       rn: 'Pour (unanime)',
       lr: 'Pour (unanime)',
@@ -205,7 +205,7 @@ export const VOTES: Record<string, Vote> = {
     titre: 'Budget 2026',
     date: '2026-02-02',
     resume:
-      'Adopté après trois 49.3 du Premier ministre Sébastien Lecornu. Les deux dernières motions de censure (gauche : 260 voix ; RN : 135 voix) ont été rejetées, le PS et LR ayant annoncé ne pas les voter.',
+      'Adopté après trois 49.3 du Premier ministre Sébastien Lecornu. Les deux dernières motions de censure (gauche : 260 voix ; RN : 135 voix) ont été rejetées, le PS et LR ayant annoncé ne pas les voter.',
     positions: {
       rn: 'Pour les deux motions de censure',
       lfi: 'Pour la motion de gauche (unanime)',

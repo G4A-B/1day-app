@@ -12,7 +12,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's01',
     type: 'savoir',
     theme: 'economie',
-    question: 'Qui veut un impôt sur le revenu à 14 tranches ?',
+    question: 'Qui veut un impôt sur le revenu à 14 tranches ?',
     options: [
       { id: 'a', libelle: 'PCF' },
       { id: 'b', libelle: 'LFI', juste: true },
@@ -20,7 +20,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Les Écologistes' },
     ],
     explication:
-      'C’est LFI : 14 tranches, jusqu’à 82 % sur les très hauts revenus, avec un ISF élargi et une taxe « Zucman » au-delà de 100 M€. Le PCF propose, lui, un barème à 9 tranches.',
+      'C’est LFI : 14 tranches, jusqu’à 82 % sur les très hauts revenus, avec un ISF élargi et une taxe « Zucman » au-delà de 100 M€. Le PCF propose, lui, un barème à 9 tranches.',
     sources: [PROGRAMMES.economie.lfi.sources[0], PROGRAMMES.economie.pcf.sources[0]],
     fiches: ['parti-lfi', 'personnalite-melenchon'],
   },
@@ -28,7 +28,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's02',
     type: 'savoir',
     theme: 'economie',
-    question: '350 € par mois d’allocation familiale dès le premier enfant : qui la promet ?',
+    question: '350 € par mois d’allocation familiale dès le premier enfant : qui la promet ?',
     options: [
       { id: 'a', libelle: 'RN' },
       { id: 'b', libelle: 'LR' },
@@ -36,7 +36,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Reconquête' },
     ],
     explication:
-      'C’est Horizons, le parti d’Édouard Philippe. Son « pacte fiscal » prévoit aussi 50 Md€ de baisse des impôts de production en échange de 50 Md€ d’aides publiques supprimées.',
+      'C’est Horizons, le parti d’Édouard Philippe. Son « pacte fiscal » prévoit aussi 50 Md€ de baisse des impôts de production en échange de 50 Md€ d’aides publiques supprimées.',
     sources: [PROGRAMMES.economie.horizons.sources[0]],
     fiches: ['parti-horizons', 'personnalite-philippe'],
   },
@@ -44,7 +44,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's03',
     type: 'savoir',
     theme: 'economie',
-    question: 'Fusionner la CSG et l’impôt sur le revenu : de qui vient l’idée ?',
+    question: 'Fusionner la CSG et l’impôt sur le revenu : de qui vient l’idée ?',
     options: [
       { id: 'a', libelle: 'MoDem', juste: true },
       { id: 'b', libelle: 'Renaissance' },
@@ -60,7 +60,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's04',
     type: 'savoir',
     theme: 'economie',
-    question: 'SMIC à 1 600 € net : combien des 10 partis le proposent ?',
+    question: 'SMIC à 1 600 € net : combien des 10 partis le proposent ?',
     options: [
       { id: 'a', libelle: 'Un seul' },
       { id: 'b', libelle: 'Deux' },
@@ -68,7 +68,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Cinq' },
     ],
     explication:
-      'Trois : LFI, le PCF et le PS (en 2 ans pour le PS). Les Écologistes visent, eux, un SMIC à 2 000 € brut.',
+      'Trois : LFI, le PCF et le PS (en 2 ans pour le PS). Les Écologistes visent, eux, un SMIC à 2 000 € brut.',
     sources: [
       PROGRAMMES.economie.lfi.sources[0],
       PROGRAMMES.economie.pcf.sources[0],
@@ -83,7 +83,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's05',
     type: 'savoir',
     theme: 'retraites',
-    question: 'Retour à 62 ans ET pension minimale garantie à 1 200 € : dans quel programme ?',
+    question: 'Retour à 62 ans ET pension minimale garantie à 1 200 € : dans quel programme ?',
     options: [
       { id: 'a', libelle: 'LFI' },
       { id: 'b', libelle: 'Les Écologistes' },
@@ -91,7 +91,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'PS', juste: true },
     ],
     explication:
-      'Celui du PS, qui veut abroger la réforme de 2023. Les Écologistes veulent aussi revenir à 62 ans ; LFI et le PCF visent 60 ans, LFI avec une pension minimale au niveau du SMIC.',
+      'Celui du PS, qui veut abroger la réforme de 2023. Les Écologistes veulent aussi revenir à 62 ans ; LFI et le PCF visent 60 ans, LFI avec une pension minimale au niveau du SMIC.',
     sources: [
       PROGRAMMES.retraites.ps.sources[0],
       PROGRAMMES.retraites.ecologistes.sources[0],
@@ -104,7 +104,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's06',
     type: 'savoir',
     theme: 'retraites',
-    question: '1 000 € versés à la naissance sur un compte de capitalisation : qui y a pensé ?',
+    question: '1 000 € versés à la naissance sur un compte de capitalisation : qui y a pensé ?',
     options: [
       { id: 'a', libelle: 'Renaissance', juste: true },
       { id: 'b', libelle: 'Horizons' },
@@ -112,7 +112,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Reconquête' },
     ],
     explication:
-      'Renaissance. Le parti de Gabriel Attal veut aussi supprimer l’âge légal fixe : seule compterait la durée de cotisation, avec un système de malus et de bonus.',
+      'Renaissance. Le parti de Gabriel Attal veut aussi supprimer l’âge légal fixe : seule compterait la durée de cotisation, avec un système de malus et de bonus.',
     sources: [PROGRAMMES.retraites.renaissance.sources[0]],
     fiches: ['parti-renaissance', 'personnalite-attal', 'sujet-retraites'],
   },
@@ -120,7 +120,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's07',
     type: 'savoir',
     theme: 'retraites',
-    question: '45 annuités de cotisation : qui veut aller jusque-là ?',
+    question: '45 annuités de cotisation : qui veut aller jusque-là ?',
     options: [
       { id: 'a', libelle: 'LR' },
       { id: 'b', libelle: 'Reconquête' },
@@ -136,7 +136,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's08',
     type: 'savoir',
     theme: 'retraites',
-    question: 'Partir dès 63 ans, mais avec une décote de 7 % par an : de qui est l’idée ?',
+    question: 'Partir dès 63 ans, mais avec une décote de 7 % par an : de qui est l’idée ?',
     options: [
       { id: 'a', libelle: 'Bruno Retailleau (LR)', juste: true },
       { id: 'b', libelle: 'Édouard Philippe (Horizons)' },
@@ -144,7 +144,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Jordan Bardella (RN)' },
     ],
     explication:
-      'De Bruno Retailleau : âge minimal à 63 ans avec décote, taux plein automatique à 65 ans et un volet capitalisation pour les jeunes.',
+      'De Bruno Retailleau : âge minimal à 63 ans avec décote, taux plein automatique à 65 ans et un volet capitalisation pour les jeunes.',
     sources: [PROGRAMMES.retraites.lr.sources[0]],
     fiches: ['parti-lr', 'personnalite-retailleau', 'sujet-retraites'],
   },
@@ -154,7 +154,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's09',
     type: 'savoir',
     theme: 'immigration',
-    question: 'Une immigration de travail à points, « à la canadienne » : quel parti la propose ?',
+    question: 'Une immigration de travail à points, « à la canadienne » : quel parti la propose ?',
     options: [
       { id: 'a', libelle: 'Horizons' },
       { id: 'b', libelle: 'PS' },
@@ -162,7 +162,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Renaissance', juste: true },
     ],
     explication:
-      'Renaissance, avec des quotas d’immigration de travail fixés tous les 2 ans par les partenaires sociaux et le Parlement. Sa ligne : « accueillir moins pour accueillir mieux ».',
+      'Renaissance, avec des quotas d’immigration de travail fixés tous les 2 ans par les partenaires sociaux et le Parlement. Sa ligne : « accueillir moins pour accueillir mieux ».',
     sources: [PROGRAMMES.immigration.renaissance.sources[0]],
     fiches: ['parti-renaissance', 'personnalite-attal', 'sujet-immigration'],
   },
@@ -170,7 +170,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's10',
     type: 'savoir',
     theme: 'immigration',
-    question: 'Un ministère dédié à la « remigration » : dans quel programme ?',
+    question: 'Un ministère dédié à la « remigration » : dans quel programme ?',
     options: [
       { id: 'a', libelle: 'Reconquête', juste: true },
       { id: 'b', libelle: 'RN' },
@@ -186,7 +186,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's11',
     type: 'savoir',
     theme: 'immigration',
-    question: 'Un « verrou Schengen » contre les régularisations massives : qui veut le poser ?',
+    question: 'Un « verrou Schengen » contre les régularisations massives : qui veut le poser ?',
     options: [
       { id: 'a', libelle: 'Renaissance' },
       { id: 'b', libelle: 'Horizons', juste: true },
@@ -202,7 +202,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's12',
     type: 'savoir',
     theme: 'immigration',
-    question: 'Immigration légale : Bruno Retailleau veut la limiter à combien de personnes par an ?',
+    question: 'Immigration légale : Bruno Retailleau veut la limiter à combien de personnes par an ?',
     options: [
       { id: 'a', libelle: 'Moins de 10 000' },
       { id: 'b', libelle: 'Moins de 50 000', juste: true },
@@ -220,7 +220,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's13',
     type: 'savoir',
     theme: 'securite',
-    question: 'Abaisser la majorité pénale à 16 ans : qui le propose ?',
+    question: 'Abaisser la majorité pénale à 16 ans : qui le propose ?',
     options: [
       { id: 'a', libelle: 'Renaissance' },
       { id: 'b', libelle: 'Horizons' },
@@ -236,7 +236,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's14',
     type: 'savoir',
     theme: 'securite',
-    question: 'Un « état d’urgence anti-trafics », avec bouclage de quartiers : qui le réclame ?',
+    question: 'Un « état d’urgence anti-trafics », avec bouclage de quartiers : qui le réclame ?',
     options: [
       { id: 'a', libelle: 'Renaissance' },
       { id: 'b', libelle: 'RN' },
@@ -252,7 +252,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's15',
     type: 'savoir',
     theme: 'securite',
-    question: '9 000 magistrat·es de plus en 10 ans : qui veut muscler la justice ?',
+    question: '9 000 magistrat·es de plus en 10 ans : qui veut muscler la justice ?',
     options: [
       { id: 'a', libelle: 'PS' },
       { id: 'b', libelle: 'LFI' },
@@ -268,7 +268,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's16',
     type: 'savoir',
     theme: 'securite',
-    question: '30 000 recrutements pour une police de proximité : qui le propose ?',
+    question: '30 000 recrutements pour une police de proximité : qui le propose ?',
     options: [
       { id: 'a', libelle: 'PCF', juste: true },
       { id: 'b', libelle: 'PS' },
@@ -276,7 +276,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Renaissance' },
     ],
     explication:
-      'Le PCF de Fabien Roussel. Le PS parle aussi de police de proximité « modernisée » ; Horizons promet 10 000 policier·es et gendarmes de plus.',
+      'Le PCF de Fabien Roussel. Le PS parle aussi de police de proximité « modernisée » ; Horizons promet 10 000 policier·es et gendarmes de plus.',
     sources: [
       PROGRAMMES.securite.pcf.sources[0],
       PROGRAMMES.securite.ps.sources[0],
@@ -290,7 +290,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's17',
     type: 'savoir',
     theme: 'sante',
-    question: 'Une mutuelle publique à 1 € par jour : qui la propose ?',
+    question: 'Une mutuelle publique à 1 € par jour : qui la propose ?',
     options: [
       { id: 'a', libelle: 'Renaissance', juste: true },
       { id: 'b', libelle: 'PS' },
@@ -298,7 +298,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Horizons' },
     ],
     explication:
-      'Renaissance, qui refuse en revanche la « Grande Sécu ». LFI propose à l’inverse le « 100 % Sécu », avec des mutuelles intégrées à la Sécurité sociale.',
+      'Renaissance, qui refuse en revanche la « Grande Sécu ». LFI propose à l’inverse le « 100 % Sécu », avec des mutuelles intégrées à la Sécurité sociale.',
     sources: [PROGRAMMES.sante.renaissance.sources[0], PROGRAMMES.sante.lfi.sources[0]],
     fiches: ['parti-renaissance', 'personnalite-attal'],
   },
@@ -306,7 +306,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's18',
     type: 'savoir',
     theme: 'sante',
-    question: 'Doubler le nombre de professionnel·les de santé mentale remboursé·es : qui s’y engage ?',
+    question: 'Doubler le nombre de professionnel·les de santé mentale remboursé·es : qui s’y engage ?',
     options: [
       { id: 'a', libelle: 'Les Écologistes' },
       { id: 'b', libelle: 'Horizons' },
@@ -322,7 +322,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's19',
     type: 'savoir',
     theme: 'sante',
-    question: 'Des cliniques mobiles contre les déserts médicaux : quel parti a eu l’idée ?',
+    question: 'Des cliniques mobiles contre les déserts médicaux : quel parti a eu l’idée ?',
     options: [
       { id: 'a', libelle: 'Renaissance' },
       { id: 'b', libelle: 'Horizons' },
@@ -338,7 +338,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's20',
     type: 'savoir',
     theme: 'sante',
-    question: 'Un plan de 20 milliards d’euros pour la santé : qui le met sur la table ?',
+    question: 'Un plan de 20 milliards d’euros pour la santé : qui le met sur la table ?',
     options: [
       { id: 'a', libelle: 'Reconquête' },
       { id: 'b', libelle: 'RN', juste: true },
@@ -356,7 +356,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's21',
     type: 'savoir',
     theme: 'education',
-    question: 'Une allocation étudiante de 850 € par mois : qui la propose ?',
+    question: 'Une allocation étudiante de 850 € par mois : qui la propose ?',
     options: [
       { id: 'a', libelle: 'PCF', juste: true },
       { id: 'b', libelle: 'Renaissance' },
@@ -372,7 +372,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's22',
     type: 'savoir',
     theme: 'education',
-    question: '100 000 logements étudiants en 5 ans : qui le promet ?',
+    question: '100 000 logements étudiants en 5 ans : qui le promet ?',
     options: [
       { id: 'a', libelle: 'PS' },
       { id: 'b', libelle: 'LFI' },
@@ -388,7 +388,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's23',
     type: 'savoir',
     theme: 'education',
-    question: '1 000 établissements publics « libres » : qui veut les créer ?',
+    question: '1 000 établissements publics « libres » : qui veut les créer ?',
     options: [
       { id: 'a', libelle: 'Reconquête' },
       { id: 'b', libelle: 'LR', juste: true },
@@ -404,7 +404,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's24',
     type: 'savoir',
     theme: 'education',
-    question: 'Des classes de 19 élèves en primaire (12 en REP) d’ici 2032 : qui le propose ?',
+    question: 'Des classes de 19 élèves en primaire (12 en REP) d’ici 2032 : qui le propose ?',
     options: [
       { id: 'a', libelle: 'Les Écologistes', juste: true },
       { id: 'b', libelle: 'LFI' },
@@ -426,7 +426,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's25',
     type: 'savoir',
     theme: 'ecologie',
-    question: 'Nationaliser TotalEnergies et Engie, en plus d’EDF : qui le propose ?',
+    question: 'Nationaliser TotalEnergies et Engie, en plus d’EDF : qui le propose ?',
     options: [
       { id: 'a', libelle: 'Les Écologistes' },
       { id: 'b', libelle: 'PS' },
@@ -442,7 +442,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's26',
     type: 'savoir',
     theme: 'ecologie',
-    question: 'La neutralité carbone dès 2040 : qui vise cette date ?',
+    question: 'La neutralité carbone dès 2040 : qui vise cette date ?',
     options: [
       { id: 'a', libelle: 'Les Écologistes', juste: true },
       { id: 'b', libelle: 'PS' },
@@ -450,7 +450,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'MoDem' },
     ],
     explication:
-      'Les Écologistes, qui veulent aussi sortir du nucléaire (via une convention citoyenne) et interdire les « méga-bassines ». Le PS vise -90 % d’émissions en 2040 et la neutralité en 2050.',
+      'Les Écologistes, qui veulent aussi sortir du nucléaire (via une convention citoyenne) et interdire les « méga-bassines ». Le PS vise -90 % d’émissions en 2040 et la neutralité en 2050.',
     sources: [PROGRAMMES.ecologie.ecologistes.sources[0], PROGRAMMES.ecologie.ps.sources[0]],
     fiches: ['parti-ecologistes', 'personnalite-tondelier', 'sujet-nucleaire'],
   },
@@ -458,7 +458,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's27',
     type: 'savoir',
     theme: 'ecologie',
-    question: 'Un million de voitures électriques à 100 € par mois en leasing social : qui le propose ?',
+    question: 'Un million de voitures électriques à 100 € par mois en leasing social : qui le propose ?',
     options: [
       { id: 'a', libelle: 'Les Écologistes' },
       { id: 'b', libelle: 'LFI' },
@@ -466,7 +466,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'PCF' },
     ],
     explication:
-      'Le PS, qui veut aussi de nouveaux EPR en complément des renouvelables. Sa doctrine : « nucléaire autant que nécessaire, renouvelables autant que possible ».',
+      'Le PS, qui veut aussi de nouveaux EPR en complément des renouvelables. Sa doctrine : « nucléaire autant que nécessaire, renouvelables autant que possible ».',
     sources: [PROGRAMMES.ecologie.ps.sources[0]],
     fiches: ['parti-ps', 'personnalite-glucksmann', 'sujet-nucleaire'],
   },
@@ -474,7 +474,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's28',
     type: 'savoir',
     theme: 'ecologie',
-    question: '500 milliards d’euros pour le nucléaire : quel parti met le paquet ?',
+    question: '500 milliards d’euros pour le nucléaire : quel parti met le paquet ?',
     options: [
       { id: 'a', libelle: 'LR' },
       { id: 'b', libelle: 'RN' },
@@ -492,7 +492,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's29',
     type: 'savoir',
     theme: 'europe',
-    question: 'Une Constitution européenne et un président de l’UE élu au suffrage universel : qui en rêve ?',
+    question: 'Une Constitution européenne et un président de l’UE élu au suffrage universel : qui en rêve ?',
     options: [
       { id: 'a', libelle: 'Renaissance' },
       { id: 'b', libelle: 'MoDem', juste: true },
@@ -508,7 +508,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's30',
     type: 'savoir',
     theme: 'europe',
-    question: 'Remplacer la Commission européenne par un simple secrétariat : qui le propose ?',
+    question: 'Remplacer la Commission européenne par un simple secrétariat : qui le propose ?',
     options: [
       { id: 'a', libelle: 'RN' },
       { id: 'b', libelle: 'LFI' },
@@ -524,7 +524,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's31',
     type: 'savoir',
     theme: 'europe',
-    question: 'Des « États-Unis d’Europe » autour d’un noyau de 8 à 10 pays : de qui est ce projet ?',
+    question: 'Des « États-Unis d’Europe » autour d’un noyau de 8 à 10 pays : de qui est ce projet ?',
     options: [
       { id: 'a', libelle: 'PS' },
       { id: 'b', libelle: 'Les Écologistes' },
@@ -540,7 +540,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's32',
     type: 'savoir',
     theme: 'europe',
-    question: 'Face à l’UE, un « plan A, plan B » et la « désobéissance européenne » : quel parti ?',
+    question: 'Face à l’UE, un « plan A, plan B » et la « désobéissance européenne » : quel parti ?',
     options: [
       { id: 'a', libelle: 'LFI', juste: true },
       { id: 'b', libelle: 'PCF' },
@@ -548,7 +548,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Reconquête' },
     ],
     explication:
-      'LFI : refonder radicalement les traités et ne plus appliquer les règles de déficit et de dette. Le PCF propose plutôt un référendum, sans sortie de l’UE ; le RN a abandonné le Frexit mais conteste les contraintes « de l’intérieur ».',
+      'LFI : refonder radicalement les traités et ne plus appliquer les règles de déficit et de dette. Le PCF propose plutôt un référendum, sans sortie de l’UE ; le RN a abandonné le Frexit mais conteste les contraintes « de l’intérieur ».',
     sources: [PROGRAMMES.europe.lfi.sources[0], PROGRAMMES.europe.pcf.sources[0], PROGRAMMES.europe.rn.sources[0]],
     fiches: ['parti-lfi', 'personnalite-melenchon', 'sujet-europe'],
   },
@@ -558,7 +558,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's33',
     type: 'savoir',
     theme: 'defense',
-    question: 'LFI et le PCF veulent sortir de l’OTAN. Lequel réclame aussi sa dissolution ?',
+    question: 'LFI et le PCF veulent sortir de l’OTAN. Lequel réclame aussi sa dissolution ?',
     options: [
       { id: 'a', libelle: 'LFI' },
       { id: 'b', libelle: 'PCF', juste: true },
@@ -566,7 +566,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Aucun des deux' },
     ],
     explication:
-      'Le PCF, qui veut aussi que la France signe le traité d’interdiction des armes nucléaires (TIAN). LFI prévoit une sortie « par étapes » et une doctrine de non-alignement.',
+      'Le PCF, qui veut aussi que la France signe le traité d’interdiction des armes nucléaires (TIAN). LFI prévoit une sortie « par étapes » et une doctrine de non-alignement.',
     sources: [PROGRAMMES.defense.pcf.sources[0], PROGRAMMES.defense.lfi.sources[0]],
     fiches: ['parti-pcf', 'personnalite-roussel', 'parti-lfi'],
   },
@@ -574,7 +574,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's34',
     type: 'savoir',
     theme: 'defense',
-    question: 'Une armée de terre à 100 000 soldats opérationnels : qui le propose ?',
+    question: 'Une armée de terre à 100 000 soldats opérationnels : qui le propose ?',
     options: [
       { id: 'a', libelle: 'RN' },
       { id: 'b', libelle: 'LR' },
@@ -590,7 +590,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's35',
     type: 'savoir',
     theme: 'defense',
-    question: 'Un fonds européen de défense de 500 milliards d’euros : qui le propose ?',
+    question: 'Un fonds européen de défense de 500 milliards d’euros : qui le propose ?',
     options: [
       { id: 'a', libelle: 'PS', juste: true },
       { id: 'b', libelle: 'MoDem' },
@@ -598,7 +598,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Horizons' },
     ],
     explication:
-      'Le PS, qui envisage aussi d’étendre la dissuasion nucléaire française aux partenaires de l’UE. Il juge l’OTAN « politiquement morte » sous Trump, sans prôner d’en sortir.',
+      'Le PS, qui envisage aussi d’étendre la dissuasion nucléaire française aux partenaires de l’UE. Il juge l’OTAN « politiquement morte » sous Trump, sans prôner d’en sortir.',
     sources: [PROGRAMMES.defense.ps.sources[0]],
     fiches: ['parti-ps', 'personnalite-glucksmann', 'sujet-europe'],
   },
@@ -606,7 +606,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's36',
     type: 'savoir',
     theme: 'defense',
-    question: 'Un bouclier anti-missile européen : quel parti le défend ?',
+    question: 'Un bouclier anti-missile européen : quel parti le défend ?',
     options: [
       { id: 'a', libelle: 'Renaissance' },
       { id: 'b', libelle: 'Horizons' },
@@ -624,7 +624,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's37',
     type: 'savoir',
     theme: 'institutions',
-    question: 'Passer de 577 à 350 député·es : qui veut tailler dans l’Assemblée ?',
+    question: 'Passer de 577 à 350 député·es : qui veut tailler dans l’Assemblée ?',
     options: [
       { id: 'a', libelle: 'LR' },
       { id: 'b', libelle: 'Renaissance', juste: true },
@@ -632,7 +632,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Les Écologistes' },
     ],
     explication:
-      'Renaissance : 350 député·es au lieu de 577, 200 sénateur·rices au lieu de 348, et des référendums annuels à questions multiples. Horizons veut aussi moins de parlementaires, avec 15 % de proportionnelle.',
+      'Renaissance : 350 député·es au lieu de 577, 200 sénateur·rices au lieu de 348, et des référendums annuels à questions multiples. Horizons veut aussi moins de parlementaires, avec 15 % de proportionnelle.',
     sources: [PROGRAMMES.institutions.renaissance.sources[0], PROGRAMMES.institutions.horizons.sources[0]],
     fiches: ['parti-renaissance', 'personnalite-attal'],
   },
@@ -640,7 +640,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's38',
     type: 'savoir',
     theme: 'institutions',
-    question: 'Une « Banque de la démocratie » pour financer les partis : qui la propose ?',
+    question: 'Une « Banque de la démocratie » pour financer les partis : qui la propose ?',
     options: [
       { id: 'a', libelle: 'PS' },
       { id: 'b', libelle: 'LR' },
@@ -656,7 +656,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's39',
     type: 'savoir',
     theme: 'institutions',
-    question: 'Raphaël Glucksmann veut supprimer le 49.3. Pour le remplacer par quoi ?',
+    question: 'Raphaël Glucksmann veut supprimer le 49.3. Pour le remplacer par quoi ?',
     options: [
       { id: 'a', libelle: 'Un référendum' },
       { id: 'b', libelle: 'Des ordonnances' },
@@ -664,7 +664,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Un vote de confiance', juste: true },
     ],
     explication:
-      'Par un vote de confiance. Le PS propose aussi la proportionnelle et une convention citoyenne constituante ; LFI veut elle aussi supprimer le 49.3.',
+      'Par un vote de confiance. Le PS propose aussi la proportionnelle et une convention citoyenne constituante ; LFI veut elle aussi supprimer le 49.3.',
     sources: [PROGRAMMES.institutions.ps.sources[0], PROGRAMMES.institutions.lfi.sources[0]],
     fiches: ['personnalite-glucksmann', 'parti-ps', 'sujet-49-3'],
   },
@@ -672,7 +672,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's40',
     type: 'savoir',
     theme: 'institutions',
-    question: 'La « Première République écologique et citoyenne » : qui veut la fonder ?',
+    question: 'La « Première République écologique et citoyenne » : qui veut la fonder ?',
     options: [
       { id: 'a', libelle: 'LFI' },
       { id: 'b', libelle: 'Les Écologistes', juste: true },
@@ -680,7 +680,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'PCF' },
     ],
     explication:
-      'Les Écologistes : fin du présidentialisme, indépendance de la justice sanctuarisée et proportionnelle. LFI veut, elle, une VIe République via une Assemblée constituante.',
+      'Les Écologistes : fin du présidentialisme, indépendance de la justice sanctuarisée et proportionnelle. LFI veut, elle, une VIe République via une Assemblée constituante.',
     sources: [PROGRAMMES.institutions.ecologistes.sources[0], PROGRAMMES.institutions.lfi.sources[0]],
     fiches: ['parti-ecologistes', 'personnalite-tondelier'],
   },
@@ -690,7 +690,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's41',
     type: 'savoir',
     theme: 'parlement',
-    question: 'À combien de voix la réforme des retraites a-t-elle échappé à la censure en 2023 ?',
+    question: 'À combien de voix la réforme des retraites a-t-elle échappé à la censure en 2023 ?',
     options: [
       { id: 'a', libelle: '1 voix' },
       { id: 'b', libelle: '9 voix', juste: true },
@@ -698,7 +698,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: '50 voix' },
     ],
     explication:
-      '9 voix : la motion de censure transpartisane du groupe LIOT a obtenu 278 voix sur les 287 nécessaires. Le texte, passé par le 49.3, a donc été adopté.',
+      '9 voix : la motion de censure transpartisane du groupe LIOT a obtenu 278 voix sur les 287 nécessaires. Le texte, passé par le 49.3, a donc été adopté.',
     sources: VOTES.retraites2023.sources,
     fiches: ['sujet-retraites', 'sujet-49-3', 'sujet-motion-de-censure'],
   },
@@ -706,7 +706,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's42',
     type: 'savoir',
     theme: 'parlement',
-    question: 'Retraites 2023 : quel groupe s’est divisé sur la motion de censure ?',
+    question: 'Retraites 2023 : quel groupe s’est divisé sur la motion de censure ?',
     options: [
       { id: 'a', libelle: 'RN' },
       { id: 'b', libelle: 'PS' },
@@ -714,7 +714,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'MoDem' },
     ],
     explication:
-      'LR : 19 député·es sur 61 ont voté la censure. RN, LFI, PS, Écologistes et PCF l’ont votée à l’unanimité ; Renaissance, le MoDem et Horizons, qui soutenaient la réforme, ne l’ont pas votée.',
+      'LR : 19 député·es sur 61 ont voté la censure. RN, LFI, PS, Écologistes et PCF l’ont votée à l’unanimité ; Renaissance, le MoDem et Horizons, qui soutenaient la réforme, ne l’ont pas votée.',
     sources: VOTES.retraites2023.sources,
     fiches: ['parti-lr', 'sujet-retraites', 'sujet-motion-de-censure'],
   },
@@ -722,14 +722,14 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's43',
     type: 'savoir',
     theme: 'parlement',
-    question: 'Loi immigration 2023 : RN et LR ont voté pour. Le texte serait quand même passé sans les voix…',
+    question: 'Loi immigration 2023 : RN et LR ont voté pour. Le texte serait quand même passé sans les voix…',
     options: [
       { id: 'a', libelle: '… du RN', juste: true },
       { id: 'b', libelle: '… de LR' },
       { id: 'c', libelle: '… des deux' },
     ],
     explication:
-      'Du RN, mais pas de LR. Le texte a été adopté par 349 voix pour, 186 contre et 38 abstentions ; LFI, le PS, les Écologistes et le PCF ont voté contre à l’unanimité.',
+      'Du RN, mais pas de LR. Le texte a été adopté par 349 voix pour, 186 contre et 38 abstentions ; LFI, le PS, les Écologistes et le PCF ont voté contre à l’unanimité.',
     sources: VOTES.immigration2023.sources,
     fiches: ['parti-rn', 'parti-lr', 'sujet-immigration'],
   },
@@ -737,7 +737,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's44',
     type: 'savoir',
     theme: 'parlement',
-    question: 'Décembre 2024 : une motion de censure fait tomber le gouvernement Barnier. Une première depuis…',
+    question: 'Décembre 2024 : une motion de censure fait tomber le gouvernement Barnier. Une première depuis…',
     options: [
       { id: 'a', libelle: '1958' },
       { id: 'b', libelle: '1962', juste: true },
@@ -745,7 +745,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: '2017' },
     ],
     explication:
-      '1962 ! Après un 49.3 sur le budget de la Sécurité sociale, la motion a recueilli 331 voix, avec le RN, LFI, le PS, les Écologistes et le PCF.',
+      '1962 ! Après un 49.3 sur le budget de la Sécurité sociale, la motion a recueilli 331 voix, avec le RN, LFI, le PS, les Écologistes et le PCF.',
     sources: VOTES.censureBarnier2024.sources,
     fiches: ['sujet-motion-de-censure', 'sujet-49-3'],
   },
@@ -753,7 +753,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's45',
     type: 'savoir',
     theme: 'parlement',
-    question: 'Loi narcotrafic 2025 : un seul groupe a voté contre à l’unanimité. Lequel ?',
+    question: 'Loi narcotrafic 2025 : un seul groupe a voté contre à l’unanimité. Lequel ?',
     options: [
       { id: 'a', libelle: 'Les Écologistes' },
       { id: 'b', libelle: 'PCF' },
@@ -761,7 +761,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'LFI', juste: true },
     ],
     explication:
-      'LFI. Le texte a été adopté par 396 voix pour, 68 contre et 34 abstentions : les Écologistes et le PCF se sont surtout abstenus, les autres groupes ont voté pour.',
+      'LFI. Le texte a été adopté par 396 voix pour, 68 contre et 34 abstentions : les Écologistes et le PCF se sont surtout abstenus, les autres groupes ont voté pour.',
     sources: VOTES.narcotrafic2025.sources,
     fiches: ['parti-lfi', 'personnalite-melenchon'],
   },
@@ -769,7 +769,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's46',
     type: 'savoir',
     theme: 'parlement',
-    question: 'Loi « industrie verte » (2023) : qui a voté contre, à l’unanimité ?',
+    question: 'Loi « industrie verte » (2023) : qui a voté contre, à l’unanimité ?',
     options: [
       { id: 'a', libelle: 'RN et LR' },
       { id: 'b', libelle: 'PS et PCF' },
@@ -777,7 +777,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Renaissance et MoDem' },
     ],
     explication:
-      'LFI et les Écologistes ; le PS et le PCF se sont abstenus. Le RN, LR, Renaissance, le MoDem et Horizons ont voté pour : 231 voix pour, 62 contre et 19 abstentions.',
+      'LFI et les Écologistes ; le PS et le PCF se sont abstenus. Le RN, LR, Renaissance, le MoDem et Horizons ont voté pour : 231 voix pour, 62 contre et 19 abstentions.',
     sources: VOTES.industrieVerte2023.sources,
     fiches: ['parti-lfi', 'parti-ecologistes'],
   },
@@ -785,14 +785,14 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's47',
     type: 'savoir',
     theme: 'parlement',
-    question: 'Loi Duplomb (2025) : qu’a censuré le Conseil constitutionnel ?',
+    question: 'Loi Duplomb (2025) : qu’a censuré le Conseil constitutionnel ?',
     options: [
       { id: 'a', libelle: 'Tout le texte' },
       { id: 'b', libelle: 'Rien, le texte a été validé tel quel' },
       { id: 'c', libelle: 'La réintroduction de l’acétamipride, un pesticide interdit', juste: true },
     ],
     explication:
-      'La réintroduction de l’acétamipride. Le texte avait été adopté par 316 voix contre 223 (RN et LR pour, LFI, PS, Écologistes et PCF contre) ; une pétition contre lui a dépassé 2,1 millions de signatures.',
+      'La réintroduction de l’acétamipride. Le texte avait été adopté par 316 voix contre 223 (RN et LR pour, LFI, PS, Écologistes et PCF contre) ; une pétition contre lui a dépassé 2,1 millions de signatures.',
     sources: VOTES.duplomb2025.sources,
     fiches: ['parti-lr', 'parti-ecologistes'],
   },
@@ -800,7 +800,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's48',
     type: 'savoir',
     theme: 'parlement',
-    question: 'Aide à mourir, 1re lecture (2025) : quel groupe s’est coupé presque en deux ?',
+    question: 'Aide à mourir, 1re lecture (2025) : quel groupe s’est coupé presque en deux ?',
     options: [
       { id: 'a', libelle: 'Horizons', juste: true },
       { id: 'b', libelle: 'LFI' },
@@ -808,7 +808,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'LR' },
     ],
     explication:
-      'Horizons : 14 pour, 13 contre, 6 abstentions. Le RN a voté très majoritairement contre (19 pour, 101 contre) ; le volet aide à mourir a été adopté définitivement le 15 juillet 2026 (291 pour, 241 contre).',
+      'Horizons : 14 pour, 13 contre, 6 abstentions. Le RN a voté très majoritairement contre (19 pour, 101 contre) ; le volet aide à mourir a été adopté définitivement le 15 juillet 2026 (291 pour, 241 contre).',
     sources: VOTES.finDeVie2025.sources,
     fiches: ['parti-horizons', 'personnalite-philippe'],
   },
@@ -816,7 +816,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's49',
     type: 'savoir',
     theme: 'parlement',
-    question: 'Budget 2026 : combien de 49.3 a-t-il fallu au Premier ministre Sébastien Lecornu ?',
+    question: 'Budget 2026 : combien de 49.3 a-t-il fallu au Premier ministre Sébastien Lecornu ?',
     options: [
       { id: 'a', libelle: 'Un' },
       { id: 'b', libelle: 'Deux' },
@@ -824,7 +824,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'Cinq' },
     ],
     explication:
-      'Trois. Les deux dernières motions de censure ont été rejetées : 260 voix pour celle de la gauche, 135 pour celle du RN.',
+      'Trois. Les deux dernières motions de censure ont été rejetées : 260 voix pour celle de la gauche, 135 pour celle du RN.',
     sources: VOTES.budget2026.sources,
     fiches: ['sujet-49-3', 'sujet-motion-de-censure'],
   },
@@ -832,7 +832,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
     id: 's50',
     type: 'savoir',
     theme: 'parlement',
-    question: 'Budget 2026 : à gauche, quel parti a annoncé qu’il ne voterait pas la censure ?',
+    question: 'Budget 2026 : à gauche, quel parti a annoncé qu’il ne voterait pas la censure ?',
     options: [
       { id: 'a', libelle: 'LFI' },
       { id: 'b', libelle: 'PS', juste: true },
@@ -840,7 +840,7 @@ export const CARTES_SAVOIR: CarteSavoir[] = [
       { id: 'd', libelle: 'PCF' },
     ],
     explication:
-      'Le PS, tout comme LR : seuls 5 député·es socialistes ont voté la motion de la gauche, qui a été rejetée. Le budget a donc été adopté.',
+      'Le PS, tout comme LR : seuls 5 député·es socialistes ont voté la motion de la gauche, qui a été rejetée. Le budget a donc été adopté.',
     sources: VOTES.budget2026.sources,
     fiches: ['parti-ps', 'personnalite-glucksmann', 'sujet-motion-de-censure'],
   },

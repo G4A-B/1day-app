@@ -59,7 +59,7 @@ export const PARTIS: Record<IdParti, Parti> = {
     id: 'modem',
     nom: 'Mouvement démocrate',
     sigle: 'MoDem',
-    candidature: 'Pas de candidat propre : François Bayrou porte un projet de primaire du « grand fleuve central »',
+    candidature: 'Pas de candidat propre : François Bayrou porte un projet de primaire du « grand fleuve central »',
     sources: [{ url: 'https://lesdemocrates.fr/', consulteeLe: LE, titre: 'Site officiel', editeur: 'MoDem' }],
   },
   lr: {
