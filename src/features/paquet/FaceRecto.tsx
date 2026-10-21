@@ -2,13 +2,16 @@ import { LIBELLES_CARTE, numeroCarte } from '../../data/contenu'
 import { THEMES } from '../../data/themes'
 import type { Carte } from '../../data/types'
 
-/** Dos d'une carte : type, thème, numéro. Les tailles suivent la largeur de la carte (unités cqi). */
-export function FaceDos({ carte }: { carte: Carte }) {
+/** Recto d'une carte : le type, puis le thème en petit juste au-dessus de la question. Tailles relatives à la carte (cqi). */
+export function FaceRecto({ carte }: { carte: Carte }) {
   return (
-    <div className={`surface surface--${carte.type} dos`}>
-      <span className="dos__type">{LIBELLES_CARTE[carte.type]}</span>
-      <span className="dos__theme">{THEMES[carte.theme].libelle}</span>
-      <span className="dos__pied">n° {numeroCarte(carte)}</span>
+    <div className={`surface surface--${carte.type} recto`}>
+      <span className="recto__type">{LIBELLES_CARTE[carte.type]}</span>
+      <span className="recto__bloc">
+        <span className="recto__theme">{THEMES[carte.theme].libelle}</span>
+        <span className="recto__question">{carte.question}</span>
+      </span>
+      <span className="recto__pied">n° {numeroCarte(carte)}</span>
     </div>
   )
 }

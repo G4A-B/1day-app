@@ -18,6 +18,10 @@
   --color-beige: #cac3ad;
   --color-cream: #fff8ed;
 
+  /* Résultat d'une carte Savoir (provisoire) : contraste AA sur blanc */
+  --color-erreur: #b3121f;   /* 6,9:1 */
+  --color-succes: #1e7a3c;   /* 5,4:1 */
+
   /* Nuancier politique (position issue des cartes Avis) */
   --color-gauche: #b3121f;
   --color-droite: #1f4e8c;

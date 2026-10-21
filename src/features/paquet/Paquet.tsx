@@ -10,7 +10,7 @@ import {
   useProgression,
 } from '../collection/progression'
 import { CarteOuverte, type Issue } from './CarteOuverte'
-import { FaceDos } from './FaceDos'
+import { FaceRecto } from './FaceRecto'
 import './paquet.css'
 
 /** Nombre de cartes visibles sur la table (les suivantes sont masquées). */
@@ -76,7 +76,7 @@ function defilerVers(el: HTMLElement, top: number) {
 /*
  * Paquet posé sur la table : la carte du dessus se redresse, on glisse vers le haut
  * pour qu'elle s'envole et que la suivante se redresse. Une carte jouée quitte la table
- * (Savoir ratée : elle revient quelques cartes plus loin).
+ * (Savoir ratée : elle revient 10 à 15 cartes plus loin).
  *
  * Le défilement est natif (doigt, inertie, aimantation gérés par le navigateur).
  * À chaque image, on calcule pour chaque carte son écart --o avec la carte
@@ -218,12 +218,12 @@ export function Paquet() {
               aria-label={`${THEMES[carte.theme].libelle}, carte ${LIBELLES_CARTE[carte.type]}. Ouvrir`}
               onClick={() => toucher(i)}
             >
-              <FaceDos carte={carte} />
+              <FaceRecto carte={carte} />
             </button>
           ))}
           {liste.length === 0 && (
             <div className="paquet__fin">
-              <p>Tu as fait le tour du paquet !</p>
+              <p>Tu as fait le tour du paquet !</p>
               <button type="button" className="paquet__fin-bouton" onClick={() => naviguer('/collection')}>
                 Voir ma collection
               </button>

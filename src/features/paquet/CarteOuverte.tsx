@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
 import { LIBELLES_CARTE } from '../../data/contenu'
 import { THEMES } from '../../data/themes'
@@ -6,7 +6,7 @@ import type { Carte, IdFiche } from '../../data/types'
 import { LiensFiches } from '../fiches/LiensFiches'
 import { PlusLoin } from '../fiches/PlusLoin'
 import { JE_NE_SAIS_PAS } from '../position/position'
-import { FaceDos } from './FaceDos'
+import { FaceRecto } from './FaceRecto'
 
 /**
  * Comment la carte a été fermée :
@@ -14,7 +14,7 @@ import { FaceDos } from './FaceDos'
  * reportee (Savoir à revoir plus tard), repondue (Avis donné).
  */
 export type Issue = 'annulee' | 'collectee' | 'reportee' | 'repondue'
-type Contenu = 'dos' | 'question' | 'reponse'
+type Contenu = 'recto' | 'question' | 'reponse'
 
 interface Props {
   carte: Carte
@@ -44,47 +44,48 @@ function animer(el: HTMLElement, images: Keyframe[], options: KeyframeAnimationO
 }
 
 /*
- * La carte bascule de haut en bas pour se retourner. Elle a deux faces
- * (A devant, B derrière) : à chaque bascule, on change le contenu de la face
- * cachée juste avant de tourner : dos → question → réponse → dos (retour au paquet).
+ * Recto : la question (les réponses apparaissent à l'ouverture). Verso : la réponse.
+ * La carte bascule de haut en bas pour passer de l'un à l'autre. Elle a deux faces
+ * (A devant, B derrière) : avant chaque bascule, on change le contenu de la face cachée.
  */
 export function CarteOuverte({ carte, depuis, mode = 'jeu', cible, onReponse, onFermer }: Props) {
   const voile = useRef<HTMLDivElement>(null)
   const boite = useRef<HTMLDivElement>(null)
   const retourne = useRef<HTMLDivElement>(null)
   const cadre = useRef<HTMLDivElement>(null)
-  const angle = useRef(0)
   const depart = useRef('none')
   const lancee = useRef(false)
 
   const bonne = carte.type === 'savoir' ? carte.options.find((o) => o.juste) : undefined
-  const [faces, setFaces] = useState<[Contenu, Contenu]>(['dos', mode === 'revision' ? 'reponse' : 'question'])
+  // Jeu : la carte s'ouvre sur sa question (recto) et bascule sur la réponse.
+  // Révision : elle s'ouvre sur le recto puis bascule tout de suite sur la réponse.
+  const [faces, setFaces] = useState<[Contenu, Contenu]>(mode === 'revision' ? ['recto', 'reponse'] : ['question', 'reponse'])
   const [choix, setChoix] = useState<string | null>(mode === 'revision' ? (bonne?.id ?? null) : null)
   const [occupee, setOccupee] = useState(true)
-  const [faceVisible, setFaceVisible] = useState<0 | 1>(0)
+  /** Au repos (entre deux animations), la carte est « à plat » : aucune 3D, face cachée masquée. */
+  const [auRepos, setAuRepos] = useState(false)
 
   const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const duree = (ms: number) => (reduit ? 1 : ms)
 
-  function retourner() {
-    const de = angle.current
-    const vers = de + 180
-    angle.current = vers
-    return animer(retourne.current!, [{ transform: `rotateX(${-de}deg)` }, { transform: `rotateX(${-vers}deg)` }], {
+  /*
+   * Bascule de 180°. Une fois finie, on remet la carte à 0° en plaçant le contenu visible
+   * sur la face A : au repos, la face visible est toujours A, sans aucune rotation.
+   * (Sur iPhone, Safari touche et fait défiler mal le contenu d'un élément retourné en 3D.)
+   */
+  async function retourner() {
+    flushSync(() => setAuRepos(false))
+    await animer(retourne.current!, [{ transform: 'rotateX(0deg)' }, { transform: 'rotateX(-180deg)' }], {
       duration: duree(640),
       easing: EASE,
     })
+    flushSync(() => setFaces(([a, b]) => [b, a]))
+    retourne.current!.style.transform = 'rotateX(0deg)'
   }
 
+  /** Change le contenu de la face cachée (B) juste avant une bascule. */
   function changerFaceCachee(contenu: Contenu) {
-    const cachee = (angle.current / 180) % 2 === 0 ? 1 : 0
-    flushSync(() =>
-      setFaces((avant) => {
-        const apres: [Contenu, Contenu] = [...avant]
-        apres[cachee] = contenu
-        return apres
-      }),
-    )
+    flushSync(() => setFaces(([a]) => [a, contenu]))
   }
 
   // Le focus va sur la carte elle-même (invisible), pas sur un bouton :
@@ -92,7 +93,7 @@ export function CarteOuverte({ carte, depuis, mode = 'jeu', cible, onReponse, on
   function liberer() {
     flushSync(() => {
       setOccupee(false)
-      setFaceVisible((angle.current / 180) % 2 === 0 ? 0 : 1)
+      setAuRepos(true)
     })
     cadre.current?.focus({ preventScroll: true })
   }
@@ -111,7 +112,7 @@ export function CarteOuverte({ carte, depuis, mode = 'jeu', cible, onReponse, on
         easing: EASE,
       }),
       animer(voile.current!, [{ opacity: 0 }, { opacity: 1 }], { duration: duree(420), easing: 'ease-out' }),
-      retourner(),
+      mode === 'revision' ? retourner() : Promise.resolve(),
     ]).then(liberer)
     // Animation d'entrée : une seule fois, au montage.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,18 +128,19 @@ export function CarteOuverte({ carte, depuis, mode = 'jeu', cible, onReponse, on
     liberer()
   }
 
-  /** Retour à la place d'origine, la carte rebascule sur son dos. */
+  /** Retour à la place d'origine ; depuis la réponse, la carte rebascule sur son recto. */
   async function fermer() {
     if (occupee) return
     setOccupee(true)
-    changerFaceCachee('dos')
+    const surLaReponse = faces[0] === 'reponse'
+    if (surLaReponse) changerFaceCachee('recto')
     await Promise.all([
       animer(boite.current!, [{ transform: 'none' }, { transform: depart.current }], {
         duration: duree(680),
         easing: EASE,
       }),
       animer(voile.current!, [{ opacity: 1 }, { opacity: 0 }], { duration: duree(680) }),
-      retourner(),
+      surLaReponse ? retourner() : Promise.resolve(),
     ])
     if (mode === 'revision' || choix === null) onFermer('annulee')
     else onFermer(carte.type === 'avis' ? 'repondue' : 'reportee')
@@ -183,21 +185,32 @@ export function CarteOuverte({ carte, depuis, mode = 'jeu', cible, onReponse, on
     </div>
   )
 
+  /** Face d'une carte ouverte : en-tête fixe (croix), corps qui défile, bouton fixe en bas. */
+  function face(classe: string, corps: ReactNode, pied?: ReactNode) {
+    return (
+      <div className={`surface surface--${carte.type} face ${classe}`}>
+        {entete}
+        <div className="face__corps">{corps}</div>
+        {pied && <div className="face__pied">{pied}</div>}
+      </div>
+    )
+  }
+
   function rendreQuestion() {
     const options =
       carte.type === 'avis' ? [...carte.options, { id: JE_NE_SAIS_PAS, libelle: 'Je ne sais pas' }] : carte.options
-    return (
-      <div className={`surface surface--${carte.type} question`}>
-        {entete}
+    return face(
+      'question',
+      <>
         <p className="question__intitule">{carte.question}</p>
-        <div className="question__options">
+        <div className="question__options question__options--entree">
           {options.map((o) => (
             <button key={o.id} type="button" className="option" onClick={() => repondre(o.id)}>
               {o.libelle}
             </button>
           ))}
         </div>
-      </div>
+      </>,
     )
   }
 
@@ -205,43 +218,57 @@ export function CarteOuverte({ carte, depuis, mode = 'jeu', cible, onReponse, on
     if (carte.type === 'savoir') {
       const choisie = carte.options.find((o) => o.id === choix)
       const juste = choisie?.juste === true
-      return (
-        <div className="surface surface--savoir reponse">
-          {entete}
+      return face(
+        'reponse',
+        <>
           {mode === 'revision' ? (
             <p className="reponse__question">{carte.question}</p>
           ) : (
-            <p className="reponse__verdict">{juste ? 'Bien vu !' : 'Raté !'}</p>
+            <p className={`reponse__verdict reponse--${juste ? 'succes' : 'erreur'}`}>{juste ? 'Bien vu !' : 'Raté !'}</p>
           )}
-          {!juste && choisie && <p className="reponse__ligne">Tu as répondu : {choisie.libelle}</p>}
-          <p className="reponse__ligne">
-            Réponse : <strong>{bonne?.libelle}</strong>
-          </p>
-          <p className="reponse__texte">{carte.explication}</p>
+          {juste || mode === 'revision' ? (
+            <>
+              <p className={`reponse__ligne${mode === 'jeu' ? ' reponse--succes' : ''}`}>
+                Réponse : <strong>{bonne?.libelle}</strong>
+              </p>
+              <p className="reponse__texte">{carte.explication}</p>
+            </>
+          ) : (
+            // Raté : on ne donne pas la réponse, la carte reviendra plus tard dans le paquet.
+            <>
+              <p className="reponse__ligne reponse--erreur">
+                Tu as répondu : <strong>{choisie?.libelle}</strong>
+              </p>
+              <p className="reponse__texte">
+                Cette carte reviendra un peu plus tard dans le paquet. D’ici là, les fiches et les sources ci-dessous
+                peuvent t’aider.
+              </p>
+            </>
+          )}
           <PlusLoin fiches={carte.fiches} sources={carte.sources} />
-          {mode === 'jeu' && juste && (
-            <button type="button" className="reponse__action" onClick={ajouter}>
-              Ajouter à ma collection
-            </button>
-          )}
-        </div>
+        </>,
+        mode === 'jeu' && juste && (
+          <button type="button" className="reponse__action" onClick={ajouter}>
+            Ajouter à ma collection
+          </button>
+        ),
       )
     }
 
     const choisie = carte.options.find((o) => o.id === choix)
     const fichesPartis = (choisie?.partis ?? []).map((p): IdFiche => `parti-${p}`)
-    return (
-      <div className="surface surface--avis reponse">
-        {entete}
+    return face(
+      'reponse',
+      <>
         <p className="reponse__verdict">Avis noté</p>
         <p className="reponse__ligne">
-          Ta réponse : <strong>{choisie ? `« ${choisie.libelle} »` : 'Je ne sais pas'}</strong>
+          Ta réponse : <strong>{choisie ? `« ${choisie.libelle} »` : 'Je ne sais pas'}</strong>
         </p>
         {!choisie ? (
-          <p className="reponse__ligne">Pas de souci : cette carte ne compte pas dans ta position.</p>
+          <p className="reponse__ligne">Pas de souci : cette carte ne compte pas dans ta position.</p>
         ) : fichesPartis.length > 0 ? (
           <>
-            <p className="reponse__ligne">Elle rejoint le programme de :</p>
+            <p className="reponse__ligne">Elle rejoint le programme de :</p>
             <LiensFiches ids={fichesPartis} />
           </>
         ) : (
@@ -249,26 +276,31 @@ export function CarteOuverte({ carte, depuis, mode = 'jeu', cible, onReponse, on
         )}
         <p className="reponse__texte">{carte.contexte}</p>
         <PlusLoin fiches={carte.fiches} sources={carte.sources} />
-        <p className="surface__note">Ta position évolue dans ta collection, onglet « Mes avis ».</p>
-      </div>
+        <p className="surface__note">Ta position évolue dans ta collection, onglet « Mes avis ».</p>
+      </>,
     )
   }
 
   function rendre(contenu: Contenu) {
-    if (contenu === 'dos') return <FaceDos carte={carte} />
+    if (contenu === 'recto') return <FaceRecto carte={carte} />
     return contenu === 'question' ? rendreQuestion() : rendreReponse()
   }
 
   return (
-    <div className="ouverture" role="dialog" aria-modal="true" aria-label={`Carte ${THEMES[carte.theme].libelle}`}>
-      <div ref={voile} className="ouverture__voile" />
+    <div
+      className={`ouverture${auRepos ? ' ouverture--repos' : ''}`}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Carte ${THEMES[carte.theme].libelle}`}
+    >
+      <div ref={voile} className="ouverture__voile" onClick={fermer} />
       <div ref={cadre} className="ouverture__cadre" tabIndex={-1}>
         <div ref={boite} className="ouverture__carte">
           <div ref={retourne} className="ouverture__retourne">
-            <div className="ouverture__face ouverture__face--a" inert={faceVisible !== 0}>
+            <div className="ouverture__face ouverture__face--a" inert={!auRepos}>
               {rendre(faces[0])}
             </div>
-            <div className="ouverture__face ouverture__face--b" inert={faceVisible !== 1}>
+            <div className="ouverture__face ouverture__face--b" inert>
               {rendre(faces[1])}
             </div>
           </div>

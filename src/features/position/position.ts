@@ -69,7 +69,7 @@ export function pouvoirClivant(carte: CarteAvis): number {
 }
 
 function libellePosition(intensite: number, nbReponses: number) {
-  if (nbReponses < 3) return 'Pas encore de position : réponds à quelques cartes Avis'
+  if (nbReponses < 3) return 'Pas encore de position : réponds à quelques cartes Avis'
   const force = Math.abs(intensite)
   if (force < 0.12) return 'Au centre, ou entre plusieurs camps'
   const cote = intensite < 0 ? 'à gauche' : 'à droite'

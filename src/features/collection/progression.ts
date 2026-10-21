@@ -16,8 +16,9 @@ export interface Progression {
 }
 
 const CLE = 'polea-progression-v1'
-/** Une carte ratée revient quelques cartes plus loin. */
-const ECART_REPORT = 5
+/** Une carte ratée revient entre 10 et 15 cartes plus loin (tiré au hasard). */
+const ECART_REPORT_MIN = 10
+const ECART_REPORT_MAX = 15
 
 function melanger<T>(liste: T[]): T[] {
   const copie = [...liste]
@@ -60,8 +61,9 @@ function enregistrer(p: Progression) {
   }
 }
 
-// L'ordre du paquet est tiré une fois puis gardé : il ne change pas à chaque ouverture.
-let etat = charger()
+// À chaque ouverture de l'app, les cartes restantes sont mélangées.
+const charge = charger()
+let etat: Progression = { ...charge, ordre: melanger(charge.ordre) }
 enregistrer(etat)
 const abonnes = new Set<() => void>()
 
@@ -86,12 +88,13 @@ export function collecterSavoir(id: string) {
   modifier({ ...etat, ordre: etat.ordre.filter((x) => x !== id), savoir: { ...etat.savoir, [id]: aujourdHui() } })
 }
 
-/** Carte à revoir : elle revient quelques cartes plus loin dans le paquet. */
+/** Carte à revoir : elle revient entre 10 et 15 cartes plus loin dans le paquet. */
 export function reporter(id: string) {
   const sans = etat.ordre.filter((x) => x !== id)
   const depart = Math.max(0, etat.ordre.indexOf(id))
+  const ecart = ECART_REPORT_MIN + Math.floor(Math.random() * (ECART_REPORT_MAX - ECART_REPORT_MIN + 1))
   const ordre = [...sans]
-  ordre.splice(Math.min(sans.length, depart + ECART_REPORT), 0, id)
+  ordre.splice(Math.min(sans.length, depart + ecart), 0, id)
   modifier({ ...etat, ordre })
 }
 

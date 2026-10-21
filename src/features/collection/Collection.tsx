@@ -6,7 +6,7 @@ import { PARTIS } from '../../data/partis'
 import { useCouleurBarreEtat } from '../../lib/barreEtat'
 import { naviguer, revenir } from '../../lib/router'
 import { CarteOuverte } from '../paquet/CarteOuverte'
-import { FaceDos } from '../paquet/FaceDos'
+import { FaceRecto } from '../paquet/FaceRecto'
 import { calculerPosition, JE_NE_SAIS_PAS, type Position } from '../position/position'
 import { effacerAvis, repondreAvis, useProgression } from './progression'
 import './collection.css'
@@ -74,7 +74,7 @@ export function Collection({ onglet }: { onglet: Onglet }) {
         <section className="collection__contenu" aria-label="Cartes Savoir collectées">
           {savoir.length === 0 ? (
             <p className="collection__vide">
-              Réponds juste à une carte Savoir, puis touche « Ajouter à ma collection » : elle s’affichera ici.
+              Réponds juste à une carte Savoir, puis touche « Ajouter à ma collection » : elle s’affichera ici.
             </p>
           ) : (
             <ul className="collection__grille">
@@ -86,7 +86,7 @@ export function Collection({ onglet }: { onglet: Onglet }) {
                     aria-label={`Revoir la carte : ${carte.question}`}
                     onClick={(e) => ouvrir(carte.id, e.currentTarget)}
                   >
-                    <FaceDos carte={carte} />
+                    <FaceRecto carte={carte} />
                   </button>
                 </li>
               ))}
@@ -107,7 +107,7 @@ export function Collection({ onglet }: { onglet: Onglet }) {
             </div>
             {position.proximites.length > 0 && (
               <>
-                <p className="position__sous-titre">Tes réponses rejoignent le plus :</p>
+                <p className="position__sous-titre">Tes réponses rejoignent le plus :</p>
                 <ol className="position__partis">
                   {position.proximites.slice(0, 3).map((p) => (
                     <li key={p.parti}>
@@ -121,11 +121,11 @@ export function Collection({ onglet }: { onglet: Onglet }) {
               </>
             )}
             <details className="position__methode">
-              <summary>Comment c’est calculé ?</summary>
+              <summary>Comment c’est calculé ?</summary>
               <p>
                 Chaque réponse est rapprochée des partis dont le programme va dans ce sens, d’après les sources de la
                 carte. Les partis sont rangés de la gauche vers la droite ; ta position est la moyenne de tes réponses,
-                les questions qui séparent le plus la gauche et la droite comptant davantage. « Je ne sais pas » ne
+                les questions qui séparent le plus la gauche et la droite comptant davantage. « Je ne sais pas » ne
                 compte pas, et la couleur ne se marque qu’au fil des réponses.
               </p>
               <p>
@@ -150,7 +150,7 @@ export function Collection({ onglet }: { onglet: Onglet }) {
                       onClick={(e) => ouvrir(carte.id, e.currentTarget.querySelector('.vignette') ?? e.currentTarget)}
                     >
                       <span className="vignette vignette--mini" aria-hidden="true">
-                        <FaceDos carte={carte} />
+                        <FaceRecto carte={carte} />
                       </span>
                       <span className="avis-liste__texte">
                         <span className="avis-liste__question">{carte.question}</span>
@@ -169,7 +169,7 @@ export function Collection({ onglet }: { onglet: Onglet }) {
               type="button"
               className="collection__effacer"
               onClick={() => {
-                if (window.confirm('Effacer toutes tes réponses Avis ? Les cartes reviendront dans le paquet.')) effacerAvis()
+                if (window.confirm('Effacer toutes tes réponses Avis ? Les cartes reviendront dans le paquet.')) effacerAvis()
               }}
             >
               Effacer mes réponses Avis
