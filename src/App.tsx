@@ -1,11 +1,10 @@
 import { Labo } from './labo/Labo'
 import { useChemin } from './lib/router'
-import { Accueil } from './pages/Accueil'
 
+// Pour l'instant, l'accueil est la liste des tests d'animation (on choisit la variante).
 function App() {
   const chemin = useChemin()
-  if (chemin === '/labo' || chemin.startsWith('/labo/')) return <Labo chemin={chemin} />
-  return <Accueil />
+  return <Labo chemin={chemin} />
 }
 
 export default App

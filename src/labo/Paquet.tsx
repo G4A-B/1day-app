@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { CARTES, LIBELLES } from './cartes'
 import { CarteOuverte, type Issue } from './CarteOuverte'
 import { EnteteLabo } from './EnteteLabo'
@@ -11,6 +11,38 @@ const DERNIERE = CARTES.length - 1
 function calculerPas() {
   return Math.round(Math.min(220, Math.max(110, window.innerHeight * 0.22)))
 }
+
+/** Nombre pseudo-aléatoire entre 0 et 1, toujours le même pour une graine donnée. */
+function hasard(graine: number) {
+  const x = Math.sin(graine * 12.9898) * 43758.5453
+  return x - Math.floor(x)
+}
+
+// Par groupe de 3 cartes : une part à gauche (-1), une à droite (1), une au milieu (0),
+// dans un ordre qui change d'un groupe à l'autre.
+const ORDRES = [
+  [-1, 0, 1],
+  [-1, 1, 0],
+  [0, -1, 1],
+  [0, 1, -1],
+  [1, -1, 0],
+  [1, 0, -1],
+]
+
+/**
+ * Trajectoire propre à chaque carte : direction et angle de sortie (--sx, --sr),
+ * petit décalage dans le paquet (--px, --pr). Jamais deux fois exactement pareil.
+ */
+const TRAJECTOIRES = CARTES.map((_, i) => {
+  const direction = ORDRES[Math.floor(hasard(Math.floor(i / 3) + 1) * ORDRES.length)][i % 3]
+  const [a, b, c, d] = [101, 202, 303, 404].map((n) => hasard(i + n))
+  return {
+    '--sx': `${direction === 0 ? (a - 0.5) * 16 : direction * (48 + a * 26)}vw`,
+    '--sr': `${direction === 0 ? (b - 0.5) * 12 : direction * (12 + b * 16)}deg`,
+    '--px': `${(c - 0.5) * 12}px`,
+    '--pr': `${(d - 0.5) * 6}deg`,
+  } as CSSProperties
+})
 
 /*
  * Le défilement est natif (doigt, inertie, aimantation gérés par le navigateur).
@@ -27,9 +59,6 @@ export function Paquet({ variante }: { variante: Variante }) {
   const [ouverte, setOuverte] = useState<{ index: number; depuis: DOMRect } | null>(null)
   const [collectees, setCollectees] = useState<ReadonlySet<number>>(() => new Set())
   const [uneParGeste, setUneParGeste] = useState(true)
-  const { sens, ordre } = variante
-
-  const position = (i: number) => (sens > 0 ? i : DERNIERE - i) * pas
 
   useEffect(() => {
     const surResize = () => setPas(calculerPas())
@@ -40,13 +69,12 @@ export function Paquet({ variante }: { variante: Variante }) {
   useLayoutEffect(() => {
     const el = defilement.current
     if (!el) return
-    el.scrollTop = (sens > 0 ? courante.current : DERNIERE - courante.current) * pas
+    el.scrollTop = courante.current * pas
 
     let image = 0
     const maj = () => {
       image = 0
-      const brut = el.scrollTop / pas
-      const p = sens > 0 ? brut : DERNIERE - brut
+      const p = el.scrollTop / pas
       cartes.current.forEach((carte, i) => {
         if (!carte) return
         const o = i - p
@@ -55,9 +83,8 @@ export function Paquet({ variante }: { variante: Variante }) {
         if (!visible) return
         carte.style.setProperty('--o', o.toFixed(4))
         carte.style.setProperty('--a', Math.abs(o).toFixed(4))
-        carte.style.zIndex = String(
-          ordre === 'devant' && o < 0 ? 2000 + Math.round(-o * 100) : 1000 - Math.round(Math.abs(o) * 100),
-        )
+        // Les cartes passées s'envolent par-dessus le paquet.
+        carte.style.zIndex = String(o < 0 ? 2000 + Math.round(-o * 100) : 1000 - Math.round(o * 100))
       })
       const i = Math.min(DERNIERE, Math.max(0, Math.round(p)))
       if (i !== courante.current) {
@@ -75,12 +102,12 @@ export function Paquet({ variante }: { variante: Variante }) {
       el.removeEventListener('scroll', surDefilement)
       cancelAnimationFrame(image)
     }
-  }, [pas, sens, ordre])
+  }, [pas])
 
   function toucher(i: number) {
     if (ouverte) return
     if (i !== courante.current) {
-      defilement.current?.scrollTo({ top: position(i), behavior: 'smooth' })
+      defilement.current?.scrollTo({ top: i * pas, behavior: 'smooth' })
       return
     }
     const carte = cartes.current[i]
@@ -113,6 +140,7 @@ export function Paquet({ variante }: { variante: Variante }) {
               }}
               type="button"
               className={`carte${ouverte?.index === i ? ' is-ouverte' : ''}`}
+              style={TRAJECTOIRES[i]}
               tabIndex={i === index ? 0 : -1}
               aria-label={`${carte.theme}, carte ${LIBELLES[carte.type]}. Ouvrir`}
               onClick={() => toucher(i)}
@@ -130,7 +158,7 @@ export function Paquet({ variante }: { variante: Variante }) {
       <EnteteLabo titre={variante.titre} droite={`${index + 1} / ${CARTES.length}`} />
 
       <div className="paquet__pied">
-        <p>{variante.consigne} · touche-la pour l’ouvrir</p>
+        <p>{variante.consigne} · touche la carte pour l’ouvrir</p>
         <label className="interrupteur">
           <input type="checkbox" checked={uneParGeste} onChange={(e) => setUneParGeste(e.target.checked)} />
           Une carte par geste

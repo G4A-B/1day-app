@@ -1,13 +1,20 @@
 import { Lien } from '../components/Lien'
 import { VARIANTES } from './variantes'
 
+function revoirSplash() {
+  try {
+    sessionStorage.removeItem('splash-vu')
+  } catch {
+    // stockage indisponible : le splash se joue de toute façon
+  }
+  window.location.reload()
+}
+
 export function LaboIndex() {
   return (
     <div className="labo-page">
       <main className="labo-index">
-        <Lien href="/" className="labo-index__retour">
-          ← Accueil
-        </Lien>
+        <img className="labo-index__logo" src="/logo.svg" alt="Poléa" width="426" height="152" />
         <h1 className="labo-index__titre">Tests d’animation</h1>
         <p className="labo-index__intro">
           Prototypes du paquet de cartes, à tester sur téléphone avec le vrai geste. Noir et blanc, contenu de
@@ -27,6 +34,12 @@ export function LaboIndex() {
               <span className="labo-lien__titre">Ouverture</span>
               <span className="labo-lien__desc">Comparer 3 animations d’ouverture d’une carte.</span>
             </Lien>
+          </li>
+          <li>
+            <button type="button" className="labo-lien" onClick={revoirSplash}>
+              <span className="labo-lien__titre">Splash screen</span>
+              <span className="labo-lien__desc">Revoir l’animation de lancement.</span>
+            </button>
           </li>
         </ol>
       </main>

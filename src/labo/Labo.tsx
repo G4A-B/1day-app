@@ -4,9 +4,9 @@ import { Paquet } from './Paquet'
 import { VARIANTES } from './variantes'
 import './labo.css'
 
-/** Routes du labo : /labo, /labo/<variante>, /labo/ouverture. */
+/** Routes du labo : / (ou /labo), /labo/<variante>, /labo/ouverture. */
 export function Labo({ chemin }: { chemin: string }) {
-  const id = chemin.replace(/^\/labo\/?/, '').replace(/\/$/, '')
+  const id = chemin.replace(/^\/(labo\/?)?/, '').replace(/\/$/, '')
   if (id === 'ouverture') return <Ouverture />
   const variante = VARIANTES.find((v) => v.id === id)
   if (variante) return <Paquet key={variante.id} variante={variante} />

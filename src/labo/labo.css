@@ -11,6 +11,11 @@
   color: var(--color-ink);
 }
 
+/* Le carré qui reçoit le focus à l'ouverture d'une carte ne doit rien afficher. */
+.ouverture__cadre:focus {
+  outline: none;
+}
+
 /* ---------- En-tête commun ---------- */
 
 .labo-entete {
@@ -58,9 +63,10 @@
   padding: max(var(--space-5), env(safe-area-inset-top)) var(--space-3) var(--space-6);
 }
 
-.labo-index__retour {
-  color: inherit;
-  font-size: var(--font-size-sm);
+.labo-index__logo {
+  display: block;
+  width: auto;
+  height: 2.5rem;
 }
 
 .labo-index__titre {
@@ -90,17 +96,16 @@
 .labo-lien {
   display: grid;
   gap: var(--space-1);
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
   padding: var(--space-4);
   border: 1.5px solid var(--color-ink);
   border-radius: var(--radius-lg);
   background: var(--color-paper);
   color: inherit;
   text-decoration: none;
-}
-
-.labo-lien:active {
-  background: var(--color-ink);
-  color: var(--color-paper);
 }
 
 .labo-lien__titre {
@@ -220,11 +225,6 @@
   font-size: max(4.6cqi, 1rem);
   text-align: left;
   cursor: pointer;
-}
-
-.option:active {
-  background: var(--encre);
-  color: var(--fond);
 }
 
 .explication {
@@ -390,37 +390,15 @@
  *
  * Variantes. --o = écart avec la carte courante (0 au centre, 1 la suivante,
  * -1 la précédente). --b = partie positive (cartes à venir), --f = partie
- * négative (cartes passées).
+ * négative (cartes passées), --l = --b plafonné à 1.
  */
 
-/* 1. Pile (croquis) : la pile est au-dessus, la carte passée tombe vers le bas. */
-.labo-paquet--pile .paquet__scene {
-  perspective-origin: 50% 15%;
-}
+/*
+ * --px / --pr : petit décalage de chaque carte dans le paquet (la carte du centre reste droite).
+ * --sx / --sr : direction et angle de sortie, différents pour chaque carte.
+ */
 
-.labo-paquet--pile .carte {
-  --b: max(var(--o), 0);
-  --f: min(var(--o), 0);
-  transform:
-    translateY(calc(16dvh - var(--b) * 34px - var(--f) * 80dvh))
-    translateZ(calc(var(--b) * -70px))
-    rotateX(calc(min(var(--b), 1) * 24deg + var(--f) * 30deg));
-  opacity: calc(1 + var(--f) * 1.2 - max(var(--b) - 6, 0));
-}
-
-/* 2. Roue : les cartes tournent sur un cylindre horizontal. */
-.labo-paquet--roue .paquet__scene {
-  perspective: 900px;
-  perspective-origin: 50% 50%;
-}
-
-.labo-paquet--roue .carte {
-  transform: translateZ(-480px) rotateX(calc(var(--o) * -24deg)) translateZ(480px);
-  opacity: calc(1.6 - var(--a) * 0.3);
-  backface-visibility: hidden;
-}
-
-/* 3. Profondeur : les cartes arrivent du fond, la carte passée s'envole vers le haut. */
+/* Profondeur : les cartes arrivent du fond, la carte passée s'envole à gauche, à droite ou au milieu. */
 .labo-paquet--profondeur .paquet__scene {
   perspective-origin: 50% 28%;
 }
@@ -428,14 +406,17 @@
 .labo-paquet--profondeur .carte {
   --b: max(var(--o), 0);
   --f: min(var(--o), 0);
+  --l: min(var(--b), 1);
   transform:
-    translateY(calc(var(--b) * -22px + var(--f) * 75dvh))
-    translateZ(calc(var(--b) * -150px - var(--f) * 220px))
-    rotateX(calc(var(--f) * -35deg));
-  opacity: calc(1 + var(--f) * 1.2 - max(var(--b) - 6, 0));
+    translateX(calc(var(--l) * var(--px) - var(--f) * var(--sx)))
+    translateY(calc(var(--b) * -22px + var(--f) * 55dvh))
+    translateZ(calc(var(--b) * -150px - var(--f) * 160px))
+    rotateZ(calc(var(--l) * var(--pr) - var(--f) * var(--sr)))
+    rotateX(calc(var(--f) * -30deg));
+  opacity: calc(1 + var(--f) * 1.1 - max(var(--b) - 6, 0));
 }
 
-/* 4. Table : paquet posé à plat en bas, la carte du dessus se redresse. */
+/* Table : paquet posé à plat en bas, la carte du dessus se redresse puis s'envole. */
 .labo-paquet--table .paquet__scene {
   perspective: 1000px;
   perspective-origin: 50% 30%;
@@ -446,10 +427,12 @@
   --f: min(var(--o), 0);
   --l: min(var(--b), 1);
   transform:
-    translateY(calc(-8dvh + var(--l) * 34dvh + (var(--b) - var(--l)) * 5px + var(--f) * 80dvh))
+    translateX(calc(var(--l) * var(--px) - var(--f) * var(--sx)))
+    translateY(calc(-8dvh + var(--l) * 34dvh + (var(--b) - var(--l)) * 5px + var(--f) * 70dvh))
     translateZ(calc(var(--l) * -40px))
-    rotateX(calc(var(--l) * 64deg + var(--f) * -25deg));
-  opacity: calc(1 + var(--f) * 1.2 - max(var(--b) - 7, 0));
+    rotateX(calc(var(--l) * 64deg + var(--f) * -20deg))
+    rotateZ(calc(var(--l) * var(--pr) * 2 - var(--f) * var(--sr)));
+  opacity: calc(1 + var(--f) * 1.1 - max(var(--b) - 7, 0));
 }
 
 /* ---------- Carte ouverte ---------- */
