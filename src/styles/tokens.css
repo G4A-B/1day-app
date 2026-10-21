@@ -5,10 +5,10 @@
  */
 :root {
   /* Couleurs */
-  --color-bg: #ffffff;
+  --color-bg: #ffd6e7;   /* rose clair */
   --color-surface: #f5f5f5;
-  --color-text: #111111;         /* 18.9:1 sur blanc */
-  --color-text-muted: #595959;   /* 7:1 sur blanc */
+  --color-text: #111111;         /* 15:1 sur le fond rose */
+  --color-text-muted: #4d4d4d;   /* 4.9:1 sur le fond rose */
   --color-border: #d4d4d4;
   --color-focus: #111111;
 
