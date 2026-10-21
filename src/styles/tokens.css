@@ -18,7 +18,21 @@
   --color-beige: #cac3ad;
   --color-cream: #fff8ed;
 
-  /* Résultat d'une carte Savoir (provisoire) : contraste AA sur blanc */
+  /* Couleurs des thèmes de cartes (palette fournie par l'équipe) */
+  --color-ivory: #faf1e0;
+  --color-camel: #d6c3a2;
+  --color-chocolate: #5b3626;
+  --color-burnt-orange: #aa531e;
+  --color-terracotta: #8b4222;
+  --color-mustard: #c08830;
+  --color-sage: #748874;
+  --color-olive: #4f5b37;
+  --color-teal: #1c424c;
+  --color-aubergine: #492d3b;
+  --color-blush: #d69f86;
+  --color-rosewood: #6e332f;
+
+  /* Résultat d'une carte Savoir (provisoire) : contraste AA sur blanc et sur ivoire */
   --color-erreur: #b3121f;   /* 6,9:1 */
   --color-succes: #1e7a3c;   /* 5,4:1 */
 

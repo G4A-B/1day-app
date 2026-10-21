@@ -104,14 +104,14 @@ html:not(.sans-splash) .paquet {
 /* ---------- Surface d'une carte (taille du texte relative à la carte) ---------- */
 
 .surface {
-  --fond: var(--color-paper);
-  --encre: var(--color-ink);
+  --fond: var(--theme-fond, var(--color-paper));
+  --encre: var(--theme-encre, var(--color-ink));
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
   padding: 7cqi;
-  border: 1.5px solid var(--color-ink);
+  border: 1.5px solid color-mix(in oklab, var(--fond), var(--color-ink) 35%);
   border-radius: 6cqi;
   background: var(--fond);
   color: var(--encre);
@@ -119,10 +119,24 @@ html:not(.sans-splash) .paquet {
   text-align: left;
 }
 
-.surface--avis {
-  --fond: var(--color-ink);
-  --encre: var(--color-paper);
-}
+/*
+ * Une couleur par thème (texte foncé ou crème selon le fond, contraste AA mesuré).
+ * Économie : l'or, la monnaie. Retraites : douceur, temps long. Immigration : le bordeaux
+ * du passeport. Sécurité : sobre, sérieux. Santé : le soin. Éducation : énergie, crayons.
+ * Écologie : le végétal. Europe : le bleu du drapeau. Défense : le kaki.
+ * Institutions : boiseries, solennité. Au Parlement : les fauteuils de l'hémicycle.
+ */
+.theme--economie { --theme-fond: var(--color-mustard); --theme-encre: var(--color-ink); }
+.theme--retraites { --theme-fond: var(--color-camel); --theme-encre: var(--color-ink); }
+.theme--immigration { --theme-fond: var(--color-rosewood); --theme-encre: var(--color-cream); }
+.theme--securite { --theme-fond: var(--color-aubergine); --theme-encre: var(--color-cream); }
+.theme--sante { --theme-fond: var(--color-blush); --theme-encre: var(--color-ink); }
+.theme--education { --theme-fond: var(--color-burnt-orange); --theme-encre: var(--color-cream); }
+.theme--ecologie { --theme-fond: var(--color-sage); --theme-encre: var(--color-ink); }
+.theme--europe { --theme-fond: var(--color-teal); --theme-encre: var(--color-cream); }
+.theme--defense { --theme-fond: var(--color-olive); --theme-encre: var(--color-cream); }
+.theme--institutions { --theme-fond: var(--color-chocolate); --theme-encre: var(--color-cream); }
+.theme--parlement { --theme-fond: var(--color-terracotta); --theme-encre: var(--color-cream); }
 
 /* Recto d'une carte : type, thème en petit au-dessus de la question, numéro. */
 .recto {
@@ -247,6 +261,18 @@ html:not(.sans-splash) .paquet {
 .face {
   padding: 0;
   overflow: hidden;
+}
+
+/* Verso (réponse) : fond ivoire pour la lecture (vert / rouge lisibles), bandeau du thème en haut. */
+.face.reponse {
+  --fond: var(--color-ivory);
+  --encre: var(--color-ink);
+}
+
+.face.reponse .surface__entete {
+  padding-bottom: 3cqi;
+  background: var(--theme-fond);
+  color: var(--theme-encre);
 }
 
 .face .surface__entete {

@@ -15,7 +15,8 @@ Consignes pour l'assistant IA sur ce dépôt.
 - `main` = production (Vercel). Vérifier `npm run build` avant chaque push.
 - Aucune nouvelle dépendance sans demande explicite (pas de routeur, D3, Supabase… pour l'instant).
 - Styles : CSS natif, uniquement via les variables de `src/styles/tokens.css`. Pas de valeurs de couleur en dur dans les composants.
-- Palette provisoire neutre. Jamais d'orange, de corail ni de terracotta. Contraste AA minimum.
+- Couleurs : palette Poléa (noir, olive, beige, crème) et une couleur par thème de carte (tokens `--color-*`, associations dans `src/features/paquet/paquet.css`). Contraste AA minimum, mesuré.
+- Nuancier politique : rouge pour la gauche, bleu pour la droite, réservés à la position (cartes Avis).
 - Accessibilité : HTML sémantique, `lang="fr"`, focus visible, lisible sur mobile.
 - Données : chaque donnée affichée a une source (URL + date de consultation), cf. `src/data/types.ts`.
 - Contenu politique : uniquement des faits présents dans les sources ; jamais d'URL inventée ; même traitement pour chaque parti ; pas d'affaires judiciaires sans condamnation définitive et deux sources.

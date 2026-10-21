@@ -188,7 +188,7 @@ export function CarteOuverte({ carte, depuis, mode = 'jeu', cible, onReponse, on
   /** Face d'une carte ouverte : en-tête fixe (croix), corps qui défile, bouton fixe en bas. */
   function face(classe: string, corps: ReactNode, pied?: ReactNode) {
     return (
-      <div className={`surface surface--${carte.type} face ${classe}`}>
+      <div className={`surface surface--${carte.type} theme--${carte.theme} face ${classe}`}>
         {entete}
         <div className="face__corps">{corps}</div>
         {pied && <div className="face__pied">{pied}</div>}
