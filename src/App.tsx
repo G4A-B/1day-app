@@ -1,11 +1,9 @@
-import './App.css'
+import { useChemin } from './lib/router'
+import { Accueil } from './pages/Accueil'
 
 function App() {
-  return (
-    <main className="accueil">
-      <h1 className="accueil__titre">Projet 1day-app - G4A / octobre 2026</h1>
-    </main>
-  )
+  useChemin()
+  return <Accueil />
 }
 
 export default App
