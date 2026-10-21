@@ -1,0 +1,15 @@
+.accueil {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.accueil__titre {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  text-wrap: balance;
+}

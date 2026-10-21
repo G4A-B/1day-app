@@ -1,0 +1,39 @@
+/*
+ * Tokens de design — PALETTE PROVISOIRE (noir, blanc, gris).
+ * Ces valeurs seront remplacées par celles de la maquette.
+ * Contrastes vérifiés AA minimum sur --color-bg.
+ */
+:root {
+  /* Couleurs */
+  --color-bg: #ffffff;
+  --color-surface: #f5f5f5;
+  --color-text: #111111;         /* 18.9:1 sur blanc */
+  --color-text-muted: #595959;   /* 7:1 sur blanc */
+  --color-border: #d4d4d4;
+  --color-focus: #111111;
+
+  /* Typographie */
+  --font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: clamp(1.75rem, 1.2rem + 2.5vw, 3rem);
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+
+  /* Espacements */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+
+  /* Rayons */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+}
