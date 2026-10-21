@@ -1,11 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { CARTES, LIBELLES } from './cartes'
 import { CarteOuverte, type Issue } from './CarteOuverte'
-import { EnteteLabo } from './EnteteLabo'
 import { FaceDos } from './FaceDos'
-import type { Variante } from './variantes'
+import './paquet.css'
 
 const DERNIERE = CARTES.length - 1
+/** Nombre de cartes visibles sur la table (les suivantes sont masquées). */
+const VISIBLES = 8
 
 /** Distance de défilement (px) pour passer d'une carte à la suivante. */
 function calculerPas() {
@@ -32,6 +33,7 @@ const ORDRES = [
 /**
  * Trajectoire propre à chaque carte : direction et angle de sortie (--sx, --sr),
  * petit décalage dans le paquet (--px, --pr). Jamais deux fois exactement pareil.
+ * --rang : ordre de distribution à l'arrivée (la carte du dessous d'abord).
  */
 const TRAJECTOIRES = CARTES.map((_, i) => {
   const direction = ORDRES[Math.floor(hasard(Math.floor(i / 3) + 1) * ORDRES.length)][i % 3]
@@ -41,16 +43,20 @@ const TRAJECTOIRES = CARTES.map((_, i) => {
     '--sr': `${direction === 0 ? (b - 0.5) * 12 : direction * (12 + b * 16)}deg`,
     '--px': `${(c - 0.5) * 12}px`,
     '--pr': `${(d - 0.5) * 6}deg`,
+    '--rang': `${Math.max(0, VISIBLES - i)}`,
   } as CSSProperties
 })
 
 /*
+ * Paquet posé sur la table : la carte du dessus se redresse, on glisse vers le haut
+ * pour qu'elle s'envole et que la suivante se redresse.
+ *
  * Le défilement est natif (doigt, inertie, aimantation gérés par le navigateur).
  * À chaque image, on calcule pour chaque carte son écart --o avec la carte
- * courante (0 = au centre, 1 = la suivante, -1 = la précédente) ;
- * le CSS de chaque variante transforme cet écart en position 3D.
+ * courante (0 = redressée, 1 = la suivante, -1 = la précédente) ;
+ * paquet.css transforme cet écart en position 3D.
  */
-export function Paquet({ variante }: { variante: Variante }) {
+export function Paquet() {
   const defilement = useRef<HTMLDivElement>(null)
   const cartes = useRef<(HTMLButtonElement | null)[]>([])
   const courante = useRef(0)
@@ -78,7 +84,7 @@ export function Paquet({ variante }: { variante: Variante }) {
         if (!carte) return
         const o = i - p
         // Sans transparence, une carte passée doit être sortie de l'écran avant d'être masquée.
-        const visible = o > -2.4 && o < 8
+        const visible = o > -2.4 && o < VISIBLES
         carte.style.visibility = visible ? '' : 'hidden'
         if (!visible) return
         carte.style.setProperty('--o', o.toFixed(4))
@@ -123,7 +129,10 @@ export function Paquet({ variante }: { variante: Variante }) {
   }
 
   return (
-    <div className={`labo-page labo-paquet labo-paquet--${variante.id}`}>
+    <div className="paquet">
+      <header className="paquet__entete">
+        <img className="paquet__logo" src="/logo.svg" alt="Poléa" width="426" height="152" />
+      </header>
       <div
         ref={defilement}
         className="paquet__defilement"
@@ -154,8 +163,6 @@ export function Paquet({ variante }: { variante: Variante }) {
           <span key={carte.id} className="paquet__cran" style={{ top: i * pas }} aria-hidden="true" />
         ))}
       </div>
-
-      <EnteteLabo titre={variante.titre} droite={`${index + 1} / ${CARTES.length}`} />
 
       {ouverte && <CarteOuverte carte={CARTES[ouverte.index]} depuis={ouverte.depuis} onFermer={fermer} />}
     </div>

@@ -21,7 +21,7 @@ export function naviguer(chemin: string) {
   abonnes.forEach((rappel) => rappel())
 }
 
-/** Chemin courant (ex. "/labo/roue"), mis à jour à chaque navigation. */
+/** Chemin courant (ex. "/collection"), mis à jour à chaque navigation. */
 export function useChemin() {
   return useSyncExternalStore(sAbonner, () => window.location.pathname)
 }

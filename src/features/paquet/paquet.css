@@ -1,0 +1,351 @@
+/*
+ * Paquet de cartes posé sur la table.
+ * Noir et blanc pour l'instant, en attendant les couleurs de la DA sur les cartes.
+ */
+
+.paquet {
+  --carte-l: min(68vw, 300px, 42dvh);
+  --carte-h: calc(var(--carte-l) * 1.4);
+  /* La distribution des cartes attend la fin du splash screen. */
+  --attente: 0ms;
+  min-height: 100dvh;
+  background: var(--color-paper-dim);
+  color: var(--color-ink);
+}
+
+html:not(.sans-splash) .paquet {
+  --attente: 1150ms;
+}
+
+/* ---------- Logo ---------- */
+
+.paquet__entete {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  padding: var(--space-3);
+  padding-top: max(var(--space-3), env(safe-area-inset-top));
+  pointer-events: none;
+}
+
+.paquet__logo {
+  display: block;
+  width: auto;
+  height: 1.5rem;
+}
+
+/* ---------- Surface d'une carte (taille du texte relative à la carte) ---------- */
+
+.surface {
+  --fond: var(--color-paper);
+  --encre: var(--color-ink);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 7cqi;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 6cqi;
+  background: var(--fond);
+  color: var(--encre);
+  box-shadow: var(--shadow-card);
+  text-align: left;
+}
+
+.surface--avis {
+  --fond: var(--color-ink);
+  --encre: var(--color-paper);
+}
+
+.dos {
+  justify-content: space-between;
+}
+
+.dos__type {
+  font-size: 4.4cqi;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dos__theme {
+  font-size: 9.5cqi;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.dos__pied {
+  display: flex;
+  justify-content: space-between;
+  font-size: 4cqi;
+  font-variant-numeric: tabular-nums;
+}
+
+.surface__entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  font-size: max(3.6cqi, 0.8125rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.surface__fermer {
+  width: 44px;
+  height: 44px;
+  margin-right: -12px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.surface__note {
+  margin: var(--space-3) 0 0;
+  font-size: max(3.2cqi, 0.75rem);
+  opacity: 0.7;
+}
+
+.question__intitule {
+  margin: auto 0 0;
+  font-size: max(6.4cqi, 1.25rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.question__options {
+  display: grid;
+  gap: 2.5cqi;
+  margin-top: 5cqi;
+}
+
+.option {
+  min-height: 48px;
+  padding: 3cqi 4cqi;
+  border: 1.5px solid var(--encre);
+  border-radius: 3.5cqi;
+  background: transparent;
+  color: var(--encre);
+  font: inherit;
+  font-size: max(4.6cqi, 1rem);
+  text-align: left;
+  cursor: pointer;
+}
+
+.explication {
+  gap: 3cqi;
+  overflow-y: auto;
+}
+
+.explication__verdict {
+  margin: 0;
+  font-size: max(7cqi, 1.375rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+}
+
+.explication__suite,
+.explication__contexte {
+  margin: 0;
+  font-size: max(4.3cqi, 0.9375rem);
+  line-height: 1.45;
+}
+
+.explication__contexte {
+  padding-top: 3cqi;
+  border-top: 1px solid currentColor;
+}
+
+.explication__source {
+  margin: 0;
+  font-size: max(3.2cqi, 0.75rem);
+  opacity: 0.7;
+}
+
+.explication__action {
+  flex-shrink: 0;
+  min-height: 52px;
+  margin-top: auto;
+  border: 0;
+  border-radius: 3.5cqi;
+  background: var(--encre);
+  color: var(--fond);
+  font: inherit;
+  font-size: max(4.6cqi, 1rem);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.surface :focus-visible {
+  outline: 2px solid var(--encre);
+  outline-offset: 2px;
+}
+
+/* ---------- Défilement natif + scène 3D ---------- */
+
+.paquet__defilement {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.paquet__defilement::-webkit-scrollbar {
+  display: none;
+}
+
+.paquet__scene {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+  perspective: 1000px;
+  perspective-origin: 50% 30%;
+}
+
+.paquet__cran {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  scroll-snap-align: start;
+  /* Une carte par geste : un glissé rapide ne saute pas plusieurs cartes. */
+  scroll-snap-stop: always;
+}
+
+/* ---------- Cartes ---------- */
+
+/* --e : avancement de la distribution à l'arrivée (0 = hors écran, 1 = posée). */
+@property --e {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+
+/*
+ * --o = écart avec la carte courante (0 redressée, 1 la suivante, -1 la précédente).
+ * --b = partie positive (cartes à venir), --f = partie négative (cartes passées),
+ * --l = --b plafonné à 1 (0 = redressée, 1 = posée à plat).
+ * --px / --pr : petit décalage de chaque carte sur la table (la carte redressée reste droite).
+ * --sx / --sr : direction et angle de sortie, différents pour chaque carte.
+ * Les cartes restent opaques en sortant ; la carte passée grossit (zoom) en quittant l'écran.
+ */
+.carte {
+  --o: 0;
+  --b: max(var(--o), 0);
+  --f: min(var(--o), 0);
+  --l: min(var(--b), 1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--carte-l);
+  height: var(--carte-h);
+  margin: calc(var(--carte-h) / -2) 0 0 calc(var(--carte-l) / -2);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  container-type: inline-size;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transform:
+    translateY(calc((1 - var(--e)) * -110dvh))
+    rotateZ(calc((1 - var(--e)) * var(--sr) * 1.5))
+    translateX(calc(var(--l) * var(--px) - var(--f) * var(--sx)))
+    translateY(calc(-14dvh + var(--l) * 32dvh + (var(--b) - var(--l)) * 4px + var(--f) * 70dvh))
+    translateZ(calc(var(--l) * -40px))
+    rotateX(calc(var(--l) * 64deg + var(--f) * -20deg))
+    rotateZ(calc(var(--l) * var(--pr) * 2 - var(--f) * var(--sr)))
+    scale(calc((1 - var(--f) * 0.3) * (1 + (1 - var(--l)) * 0.12)));
+  opacity: calc(1 - max(var(--b) - 7, 0));
+  animation: paquet-distribution 620ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  animation-delay: calc(var(--attente) + var(--rang) * 45ms);
+}
+
+@keyframes paquet-distribution {
+  from {
+    --e: 0;
+  }
+}
+
+.carte:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 6px;
+  border-radius: 6cqi;
+}
+
+.carte.is-ouverte {
+  opacity: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carte {
+    animation: none;
+  }
+}
+
+/* ---------- Carte ouverte (bascule haut-bas) ---------- */
+
+.ouverture {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+}
+
+.ouverture__voile {
+  position: absolute;
+  inset: 0;
+  background: var(--color-veil);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.ouverture__cadre {
+  --ouv-l: min(88vw, 380px, calc(78dvh / 1.4));
+  position: relative;
+  width: var(--ouv-l);
+  height: calc(var(--ouv-l) * 1.4);
+  perspective: 1400px;
+  container-type: inline-size;
+}
+
+/* Le cadre reçoit le focus à l'ouverture : rien ne doit s'afficher. */
+.ouverture__cadre:focus {
+  outline: none;
+}
+
+.ouverture__carte,
+.ouverture__retourne {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.ouverture__face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.ouverture__face--a {
+  transform: rotateX(0deg);
+}
+
+.ouverture__face--b {
+  transform: rotateX(180deg);
+}

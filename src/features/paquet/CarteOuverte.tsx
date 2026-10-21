@@ -3,8 +3,6 @@ import { flushSync } from 'react-dom'
 import { LIBELLES, QUESTIONS, type CarteDemo } from './cartes'
 import { FaceDos } from './FaceDos'
 
-/** leve : la carte se soulève puis se retourne. y : retournement gauche-droite. x : bascule haut-bas. */
-export type StyleOuverture = 'leve' | 'y' | 'x'
 export type Issue = 'collectee' | 'remise'
 type Contenu = 'dos' | 'question' | 'explication'
 
@@ -12,7 +10,6 @@ interface Props {
   carte: CarteDemo
   /** Position de la carte dans le paquet, point de départ de l'animation. */
   depuis: DOMRect
-  style?: StyleOuverture
   onFermer: (issue: Issue) => void
 }
 
@@ -31,11 +28,12 @@ function animer(el: HTMLElement, images: Keyframe[], options: KeyframeAnimationO
 }
 
 /*
- * La carte a deux faces (A devant, B derrière). À chaque retournement,
- * on change le contenu de la face cachée juste avant de tourner :
- * dos → question → explication → (dos si on la remet dans le paquet).
+ * La carte bascule de haut en bas pour se retourner. Elle a deux faces
+ * (A devant, B derrière) : à chaque bascule, on change le contenu de la face
+ * cachée juste avant de tourner : dos → question → explication → (dos si on la
+ * remet dans le paquet).
  */
-export function CarteOuverte({ carte, depuis, style = 'leve', onFermer }: Props) {
+export function CarteOuverte({ carte, depuis, onFermer }: Props) {
   const voile = useRef<HTMLDivElement>(null)
   const boite = useRef<HTMLDivElement>(null)
   const retourne = useRef<HTMLDivElement>(null)
@@ -55,23 +53,14 @@ export function CarteOuverte({ carte, depuis, style = 'leve', onFermer }: Props)
 
   const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const duree = (ms: number) => (reduit ? 1 : ms)
-  const axe = style === 'x' ? 'X' : 'Y'
-  const signe = style === 'x' ? -1 : 1
-  const rotation = (deg: number, z = 0) => `translateZ(${z}px) rotate${axe}(${deg * signe}deg)`
-
   function retourner() {
     const de = angle.current
     const vers = de + 180
     angle.current = vers
-    const images =
-      style === 'leve'
-        ? [
-            { transform: rotation(de) },
-            { transform: rotation(de + 12, 170), offset: 0.35 },
-            { transform: rotation(vers) },
-          ]
-        : [{ transform: rotation(de) }, { transform: rotation(vers) }]
-    return animer(retourne.current!, images, { duration: duree(style === 'leve' ? 820 : 640), easing: EASE })
+    return animer(retourne.current!, [{ transform: `rotateX(${-de}deg)` }, { transform: `rotateX(${-vers}deg)` }], {
+      duration: duree(640),
+      easing: EASE,
+    })
   }
 
   function changerFaceCachee(contenu: Contenu) {
@@ -233,7 +222,7 @@ export function CarteOuverte({ carte, depuis, style = 'leve', onFermer }: Props)
 
   return (
     <div
-      className={`ouverture ouverture--${style}`}
+      className="ouverture"
       role="dialog"
       aria-modal="true"
       aria-label={`Carte ${carte.theme}`}
