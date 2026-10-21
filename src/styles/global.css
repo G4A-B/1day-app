@@ -6,8 +6,18 @@
   box-sizing: border-box;
 }
 
+/*
+ * App manipulée uniquement au doigt : pas de survol, pas de surlignage au toucher,
+ * pas de sélection de texte ni de menu à l'appui long, pas de zoom au double tap.
+ * Un tap = une action.
+ */
 html {
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 body {

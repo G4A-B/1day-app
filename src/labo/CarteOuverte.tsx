@@ -39,8 +39,7 @@ export function CarteOuverte({ carte, depuis, style = 'leve', onFermer }: Props)
   const voile = useRef<HTMLDivElement>(null)
   const boite = useRef<HTMLDivElement>(null)
   const retourne = useRef<HTMLDivElement>(null)
-  const premiereOption = useRef<HTMLButtonElement>(null)
-  const action = useRef<HTMLButtonElement>(null)
+  const cadre = useRef<HTMLDivElement>(null)
   const angle = useRef(0)
   const depart = useRef('none')
   const lancee = useRef(false)
@@ -86,12 +85,14 @@ export function CarteOuverte({ carte, depuis, style = 'leve', onFermer }: Props)
     )
   }
 
-  function liberer(cible: HTMLButtonElement | null) {
+  // Le focus va sur la carte elle-même (invisible), pas sur un bouton :
+  // au doigt, aucun bouton ne doit paraître présélectionné.
+  function liberer() {
     flushSync(() => {
       setOccupee(false)
       setFaceVisible((angle.current / 180) % 2 === 0 ? 0 : 1)
     })
-    cible?.focus({ preventScroll: true })
+    cadre.current?.focus({ preventScroll: true })
   }
 
   useLayoutEffect(() => {
@@ -109,7 +110,7 @@ export function CarteOuverte({ carte, depuis, style = 'leve', onFermer }: Props)
       }),
       animer(voile.current!, [{ opacity: 0 }, { opacity: 1 }], { duration: duree(420), easing: 'ease-out' }),
       retourner(),
-    ]).then(() => liberer(premiereOption.current))
+    ]).then(liberer)
     // Animation d'entrée : une seule fois, au montage.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -120,7 +121,7 @@ export function CarteOuverte({ carte, depuis, style = 'leve', onFermer }: Props)
     setChoix(id)
     changerFaceCachee('explication')
     await retourner()
-    liberer(action.current)
+    liberer()
   }
 
   async function ranger() {
@@ -188,10 +189,9 @@ export function CarteOuverte({ carte, depuis, style = 'leve', onFermer }: Props)
           </div>
           <p className="question__intitule">{question.intitule}</p>
           <div className="question__options">
-            {question.options.map((o, i) => (
+            {question.options.map((o) => (
               <button
                 key={o.id}
-                ref={i === 0 ? premiereOption : undefined}
                 type="button"
                 className="option"
                 onClick={() => repondre(o.id)}
@@ -221,7 +221,6 @@ export function CarteOuverte({ carte, depuis, style = 'leve', onFermer }: Props)
         <p className="explication__contexte">{question.contexte}</p>
         <p className="explication__source">Source : {question.source}</p>
         <button
-          ref={action}
           type="button"
           className="explication__action"
           onClick={collectee ? ranger : remettre}
@@ -240,7 +239,7 @@ export function CarteOuverte({ carte, depuis, style = 'leve', onFermer }: Props)
       aria-label={`Carte ${carte.theme}`}
     >
       <div ref={voile} className="ouverture__voile" />
-      <div className="ouverture__cadre">
+      <div ref={cadre} className="ouverture__cadre" tabIndex={-1}>
         <div ref={boite} className="ouverture__carte">
           <div ref={retourne} className="ouverture__retourne">
             <div className="ouverture__face ouverture__face--a" inert={faceVisible !== 0}>
