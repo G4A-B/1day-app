@@ -58,7 +58,6 @@ export function Paquet({ variante }: { variante: Variante }) {
   const [pas, setPas] = useState(calculerPas)
   const [ouverte, setOuverte] = useState<{ index: number; depuis: DOMRect } | null>(null)
   const [collectees, setCollectees] = useState<ReadonlySet<number>>(() => new Set())
-  const [uneParGeste, setUneParGeste] = useState(true)
 
   useEffect(() => {
     const surResize = () => setPas(calculerPas())
@@ -78,7 +77,8 @@ export function Paquet({ variante }: { variante: Variante }) {
       cartes.current.forEach((carte, i) => {
         if (!carte) return
         const o = i - p
-        const visible = o > -1.6 && o < 8
+        // Sans transparence, une carte passée doit être sortie de l'écran avant d'être masquée.
+        const visible = o > -2.4 && o < 8
         carte.style.visibility = visible ? '' : 'hidden'
         if (!visible) return
         carte.style.setProperty('--o', o.toFixed(4))
@@ -126,7 +126,7 @@ export function Paquet({ variante }: { variante: Variante }) {
     <div className={`labo-page labo-paquet labo-paquet--${variante.id}`}>
       <div
         ref={defilement}
-        className={`paquet__defilement${uneParGeste ? ' paquet__defilement--cran' : ''}`}
+        className="paquet__defilement"
         role="region"
         aria-label="Paquet de cartes : fais défiler pour changer de carte"
         tabIndex={0}
@@ -156,14 +156,6 @@ export function Paquet({ variante }: { variante: Variante }) {
       </div>
 
       <EnteteLabo titre={variante.titre} droite={`${index + 1} / ${CARTES.length}`} />
-
-      <div className="paquet__pied">
-        <p>{variante.consigne} · touche la carte pour l’ouvrir</p>
-        <label className="interrupteur">
-          <input type="checkbox" checked={uneParGeste} onChange={(e) => setUneParGeste(e.target.checked)} />
-          Une carte par geste
-        </label>
-      </div>
 
       {ouverte && <CarteOuverte carte={CARTES[ouverte.index]} depuis={ouverte.depuis} onFermer={fermer} />}
     </div>
