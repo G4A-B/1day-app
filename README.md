@@ -42,6 +42,7 @@ npm run generate-pwa-assets # régénérer les icônes PNG à partir de public/i
 | `src/data` | Types des données (`types.ts`) |
 | `src/lib` | Fonctions utilitaires |
 | `src/styles` | Tokens de design et styles globaux |
+| `src/labo` | Prototypes d'animation, accessibles sur `/labo` |
 | `public/data` | Données statiques (JSON) |
 
 Chaque dossier contient un `README.md` qui détaille son rôle.

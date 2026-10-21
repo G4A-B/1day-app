@@ -1,0 +1,566 @@
+/*
+ * Labo : prototypes d'animation du paquet de cartes.
+ * Noir et blanc uniquement, aucune couleur ni choix typographique.
+ */
+
+.labo-page {
+  --carte-l: min(68vw, 300px, 44dvh);
+  --carte-h: calc(var(--carte-l) * 1.4);
+  min-height: 100dvh;
+  background: var(--color-paper-dim);
+  color: var(--color-ink);
+}
+
+/* ---------- En-tête commun ---------- */
+
+.labo-entete {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  padding-top: max(var(--space-3), env(safe-area-inset-top));
+  pointer-events: none;
+}
+
+.labo-entete__retour {
+  justify-self: start;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-paper);
+  color: inherit;
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+.labo-entete__titre {
+  margin: 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+}
+
+.labo-entete__droite {
+  justify-self: end;
+  font-size: var(--font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Index ---------- */
+
+.labo-index {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: max(var(--space-5), env(safe-area-inset-top)) var(--space-3) var(--space-6);
+}
+
+.labo-index__retour {
+  color: inherit;
+  font-size: var(--font-size-sm);
+}
+
+.labo-index__titre {
+  margin: var(--space-5) 0 var(--space-2);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-tight);
+}
+
+.labo-index__intro {
+  margin: 0 0 var(--space-5);
+  color: var(--color-text-muted);
+}
+
+.labo-index__liste {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: test;
+}
+
+.labo-index__liste li {
+  counter-increment: test;
+}
+
+.labo-lien {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1.5px solid var(--color-ink);
+  border-radius: var(--radius-lg);
+  background: var(--color-paper);
+  color: inherit;
+  text-decoration: none;
+}
+
+.labo-lien:active {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.labo-lien__titre {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.labo-lien__titre::before {
+  content: counter(test) ". ";
+}
+
+.labo-lien__desc {
+  font-size: var(--font-size-sm);
+}
+
+/* ---------- Surface d'une carte (taille du texte relative à la carte) ---------- */
+
+.surface {
+  --fond: var(--color-paper);
+  --encre: var(--color-ink);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 7cqi;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 6cqi;
+  background: var(--fond);
+  color: var(--encre);
+  box-shadow: var(--shadow-card);
+  text-align: left;
+}
+
+.surface--avis {
+  --fond: var(--color-ink);
+  --encre: var(--color-paper);
+}
+
+.dos {
+  justify-content: space-between;
+}
+
+.dos__type {
+  font-size: 4.4cqi;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dos__theme {
+  font-size: 9.5cqi;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.dos__pied {
+  display: flex;
+  justify-content: space-between;
+  font-size: 4cqi;
+  font-variant-numeric: tabular-nums;
+}
+
+.surface__entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  font-size: max(3.6cqi, 0.8125rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.surface__fermer {
+  width: 44px;
+  height: 44px;
+  margin-right: -12px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.surface__note {
+  margin: var(--space-3) 0 0;
+  font-size: max(3.2cqi, 0.75rem);
+  opacity: 0.7;
+}
+
+.question__intitule {
+  margin: auto 0 0;
+  font-size: max(6.4cqi, 1.25rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.question__options {
+  display: grid;
+  gap: 2.5cqi;
+  margin-top: 5cqi;
+}
+
+.option {
+  min-height: 48px;
+  padding: 3cqi 4cqi;
+  border: 1.5px solid var(--encre);
+  border-radius: 3.5cqi;
+  background: transparent;
+  color: var(--encre);
+  font: inherit;
+  font-size: max(4.6cqi, 1rem);
+  text-align: left;
+  cursor: pointer;
+}
+
+.option:active {
+  background: var(--encre);
+  color: var(--fond);
+}
+
+.explication {
+  gap: 3cqi;
+  overflow-y: auto;
+}
+
+.explication__verdict {
+  margin: 0;
+  font-size: max(7cqi, 1.375rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+}
+
+.explication__suite,
+.explication__contexte {
+  margin: 0;
+  font-size: max(4.3cqi, 0.9375rem);
+  line-height: 1.45;
+}
+
+.explication__contexte {
+  padding-top: 3cqi;
+  border-top: 1px solid currentColor;
+}
+
+.explication__source {
+  margin: 0;
+  font-size: max(3.2cqi, 0.75rem);
+  opacity: 0.7;
+}
+
+.explication__action {
+  flex-shrink: 0;
+  min-height: 52px;
+  margin-top: auto;
+  border: 0;
+  border-radius: 3.5cqi;
+  background: var(--encre);
+  color: var(--fond);
+  font: inherit;
+  font-size: max(4.6cqi, 1rem);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.surface :focus-visible {
+  outline: 2px solid var(--encre);
+  outline-offset: 2px;
+}
+
+/* ---------- Carte du paquet ---------- */
+
+.carte {
+  --o: 0;
+  --a: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--carte-l);
+  height: var(--carte-h);
+  margin: calc(var(--carte-h) / -2) 0 0 calc(var(--carte-l) / -2);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  container-type: inline-size;
+  cursor: pointer;
+  will-change: transform, opacity;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.carte:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 6px;
+  border-radius: 6cqi;
+}
+
+.carte.is-ouverte {
+  opacity: 0 !important;
+}
+
+/* ---------- Paquet : défilement natif + scène 3D ---------- */
+
+.paquet__defilement {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.paquet__defilement::-webkit-scrollbar {
+  display: none;
+}
+
+.paquet__scene {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+  perspective: 1100px;
+  perspective-origin: 50% 45%;
+}
+
+.paquet__cran {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  scroll-snap-align: start;
+}
+
+.paquet__defilement--cran .paquet__cran {
+  scroll-snap-stop: always;
+}
+
+.paquet__pied {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
+  font-size: var(--font-size-sm);
+  text-align: center;
+  pointer-events: none;
+}
+
+.paquet__pied p {
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--color-paper-dim);
+  color: var(--color-text-muted);
+}
+
+.interrupteur {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-paper);
+  pointer-events: auto;
+}
+
+.interrupteur input {
+  accent-color: var(--color-ink);
+}
+
+/*
+ * Les cartes à venir restent opaques (sinon on voit les suivantes à travers) ;
+ * seules les cartes qui sortent s'effacent.
+ *
+ * Variantes. --o = écart avec la carte courante (0 au centre, 1 la suivante,
+ * -1 la précédente). --b = partie positive (cartes à venir), --f = partie
+ * négative (cartes passées).
+ */
+
+/* 1. Pile (croquis) : la pile est au-dessus, la carte passée tombe vers le bas. */
+.labo-paquet--pile .paquet__scene {
+  perspective-origin: 50% 15%;
+}
+
+.labo-paquet--pile .carte {
+  --b: max(var(--o), 0);
+  --f: min(var(--o), 0);
+  transform:
+    translateY(calc(16dvh - var(--b) * 34px - var(--f) * 80dvh))
+    translateZ(calc(var(--b) * -70px))
+    rotateX(calc(min(var(--b), 1) * 24deg + var(--f) * 30deg));
+  opacity: calc(1 + var(--f) * 1.2 - max(var(--b) - 6, 0));
+}
+
+/* 2. Roue : les cartes tournent sur un cylindre horizontal. */
+.labo-paquet--roue .paquet__scene {
+  perspective: 900px;
+  perspective-origin: 50% 50%;
+}
+
+.labo-paquet--roue .carte {
+  transform: translateZ(-480px) rotateX(calc(var(--o) * -24deg)) translateZ(480px);
+  opacity: calc(1.6 - var(--a) * 0.3);
+  backface-visibility: hidden;
+}
+
+/* 3. Profondeur : les cartes arrivent du fond, la carte passée s'envole vers le haut. */
+.labo-paquet--profondeur .paquet__scene {
+  perspective-origin: 50% 28%;
+}
+
+.labo-paquet--profondeur .carte {
+  --b: max(var(--o), 0);
+  --f: min(var(--o), 0);
+  transform:
+    translateY(calc(var(--b) * -22px + var(--f) * 75dvh))
+    translateZ(calc(var(--b) * -150px - var(--f) * 220px))
+    rotateX(calc(var(--f) * -35deg));
+  opacity: calc(1 + var(--f) * 1.2 - max(var(--b) - 6, 0));
+}
+
+/* 4. Table : paquet posé à plat en bas, la carte du dessus se redresse. */
+.labo-paquet--table .paquet__scene {
+  perspective: 1000px;
+  perspective-origin: 50% 30%;
+}
+
+.labo-paquet--table .carte {
+  --b: max(var(--o), 0);
+  --f: min(var(--o), 0);
+  --l: min(var(--b), 1);
+  transform:
+    translateY(calc(-8dvh + var(--l) * 34dvh + (var(--b) - var(--l)) * 5px + var(--f) * 80dvh))
+    translateZ(calc(var(--l) * -40px))
+    rotateX(calc(var(--l) * 64deg + var(--f) * -25deg));
+  opacity: calc(1 + var(--f) * 1.2 - max(var(--b) - 7, 0));
+}
+
+/* ---------- Carte ouverte ---------- */
+
+.ouverture {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+}
+
+.ouverture__voile {
+  position: absolute;
+  inset: 0;
+  background: var(--color-veil);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.ouverture__cadre {
+  --ouv-l: min(88vw, 380px, calc(78dvh / 1.4));
+  position: relative;
+  width: var(--ouv-l);
+  height: calc(var(--ouv-l) * 1.4);
+  perspective: 1400px;
+  container-type: inline-size;
+}
+
+.ouverture__carte,
+.ouverture__retourne {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.ouverture__face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.ouverture__face--a {
+  transform: rotateY(0deg);
+}
+
+.ouverture__face--b {
+  transform: rotateY(180deg);
+}
+
+.ouverture--x .ouverture__face--b {
+  transform: rotateX(180deg);
+}
+
+/* ---------- Test d'ouverture seul ---------- */
+
+.ouv-test {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: var(--space-4);
+  padding: calc(var(--space-6) + var(--space-3)) var(--space-3) max(var(--space-4), env(safe-area-inset-bottom));
+}
+
+.ouv-test__scene {
+  display: grid;
+  place-items: center;
+}
+
+.carte--seule {
+  position: relative;
+  top: auto;
+  left: auto;
+  margin: 0;
+}
+
+.ouv-test__reglages {
+  display: grid;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+}
+
+.ouv-test__aide {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.segment {
+  display: flex;
+  padding: 3px;
+  border: 1.5px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  background: var(--color-paper);
+}
+
+.segment button {
+  flex: 1;
+  min-height: 44px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.segment button[aria-pressed='true'] {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
