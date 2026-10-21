@@ -1,15 +1,31 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
-import { LIBELLES, QUESTIONS, type CarteDemo } from './cartes'
+import { LIBELLES_CARTE } from '../../data/contenu'
+import { THEMES } from '../../data/themes'
+import type { Carte, IdFiche } from '../../data/types'
+import { LiensFiches } from '../fiches/LiensFiches'
+import { PlusLoin } from '../fiches/PlusLoin'
+import { JE_NE_SAIS_PAS } from '../position/position'
 import { FaceDos } from './FaceDos'
 
-export type Issue = 'collectee' | 'remise'
-type Contenu = 'dos' | 'question' | 'explication'
+/**
+ * Comment la carte a été fermée :
+ * annulee (pas de réponse, ou relecture), collectee (Savoir réussie, ajoutée à la collection),
+ * reportee (Savoir à revoir plus tard), repondue (Avis donné).
+ */
+export type Issue = 'annulee' | 'collectee' | 'reportee' | 'repondue'
+type Contenu = 'dos' | 'question' | 'reponse'
 
 interface Props {
-  carte: CarteDemo
-  /** Position de la carte dans le paquet, point de départ de l'animation. */
+  carte: Carte
+  /** Position de la carte d'origine, point de départ (et de retour) de l'animation. */
   depuis: DOMRect
+  /** jeu : on répond. revision : carte Savoir déjà collectée, on relit la réponse. */
+  mode?: 'jeu' | 'revision'
+  /** Où la carte s'envole quand on l'ajoute à la collection. */
+  cible?: () => DOMRect | undefined
+  /** Appelé dès qu'on choisit une réponse. */
+  onReponse?: (option: string) => void
   onFermer: (issue: Issue) => void
 }
 
@@ -30,10 +46,9 @@ function animer(el: HTMLElement, images: Keyframe[], options: KeyframeAnimationO
 /*
  * La carte bascule de haut en bas pour se retourner. Elle a deux faces
  * (A devant, B derrière) : à chaque bascule, on change le contenu de la face
- * cachée juste avant de tourner : dos → question → explication → (dos si on la
- * remet dans le paquet).
+ * cachée juste avant de tourner : dos → question → réponse → dos (retour au paquet).
  */
-export function CarteOuverte({ carte, depuis, onFermer }: Props) {
+export function CarteOuverte({ carte, depuis, mode = 'jeu', cible, onReponse, onFermer }: Props) {
   const voile = useRef<HTMLDivElement>(null)
   const boite = useRef<HTMLDivElement>(null)
   const retourne = useRef<HTMLDivElement>(null)
@@ -41,18 +56,16 @@ export function CarteOuverte({ carte, depuis, onFermer }: Props) {
   const angle = useRef(0)
   const depart = useRef('none')
   const lancee = useRef(false)
-  const [faces, setFaces] = useState<[Contenu, Contenu]>(['dos', 'question'])
-  const [choix, setChoix] = useState<string | null>(null)
+
+  const bonne = carte.type === 'savoir' ? carte.options.find((o) => o.juste) : undefined
+  const [faces, setFaces] = useState<[Contenu, Contenu]>(['dos', mode === 'revision' ? 'reponse' : 'question'])
+  const [choix, setChoix] = useState<string | null>(mode === 'revision' ? (bonne?.id ?? null) : null)
   const [occupee, setOccupee] = useState(true)
   const [faceVisible, setFaceVisible] = useState<0 | 1>(0)
 
-  const question = QUESTIONS[carte.type]
-  const option = question.options.find((o) => o.id === choix)
-  const bonne = question.options.find((o) => o.juste)
-  const collectee = carte.type === 'avis' || option?.juste === true
-
   const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const duree = (ms: number) => (reduit ? 1 : ms)
+
   function retourner() {
     const de = angle.current
     const vers = de + 180
@@ -108,29 +121,14 @@ export function CarteOuverte({ carte, depuis, onFermer }: Props) {
     if (occupee) return
     setOccupee(true)
     setChoix(id)
-    changerFaceCachee('explication')
+    onReponse?.(id)
+    changerFaceCachee('reponse')
     await retourner()
     liberer()
   }
 
-  async function ranger() {
-    if (occupee) return
-    setOccupee(true)
-    await Promise.all([
-      animer(
-        boite.current!,
-        [
-          { transform: 'none', opacity: 1 },
-          { transform: `translateY(${Math.round(window.innerHeight * 0.6)}px) scale(0.2)`, opacity: 0 },
-        ],
-        { duration: duree(520), easing: 'cubic-bezier(0.55, 0, 0.7, 0.2)' },
-      ),
-      animer(voile.current!, [{ opacity: 1 }, { opacity: 0 }], { duration: duree(520) }),
-    ])
-    onFermer('collectee')
-  }
-
-  async function remettre() {
+  /** Retour à la place d'origine, la carte rebascule sur son dos. */
+  async function fermer() {
     if (occupee) return
     setOccupee(true)
     changerFaceCachee('dos')
@@ -142,91 +140,127 @@ export function CarteOuverte({ carte, depuis, onFermer }: Props) {
       animer(voile.current!, [{ opacity: 1 }, { opacity: 0 }], { duration: duree(680) }),
       retourner(),
     ])
-    onFermer('remise')
+    if (mode === 'revision' || choix === null) onFermer('annulee')
+    else onFermer(carte.type === 'avis' ? 'repondue' : 'reportee')
+  }
+
+  /** Savoir réussie : la carte s'envole vers la collection (icône en haut à droite). */
+  async function ajouter() {
+    if (occupee) return
+    setOccupee(true)
+    const b = boite.current!
+    const ici = b.getBoundingClientRect()
+    const la = cible?.()
+    const vers = la
+      ? `translate(${la.left + la.width / 2 - (ici.left + ici.width / 2)}px, ${la.top + la.height / 2 - (ici.top + ici.height / 2)}px) scale(${Math.max(la.width, 24) / ici.width})`
+      : `translateY(${Math.round(-window.innerHeight * 0.6)}px) scale(0.2)`
+    await Promise.all([
+      animer(b, [{ transform: 'none', opacity: 1 }, { transform: vers, opacity: 0 }], {
+        duration: duree(560),
+        easing: 'cubic-bezier(0.55, 0, 0.7, 0.2)',
+      }),
+      animer(voile.current!, [{ opacity: 1 }, { opacity: 0 }], { duration: duree(560) }),
+    ])
+    onFermer('collectee')
   }
 
   useEffect(() => {
     const surTouche = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && choix === null) void remettre()
+      if (e.key === 'Escape') void fermer()
     }
     window.addEventListener('keydown', surTouche)
     return () => window.removeEventListener('keydown', surTouche)
   })
 
   const entete = (
-    <span>
-      {LIBELLES[carte.type]} · {carte.theme}
-    </span>
+    <div className="surface__entete">
+      <span>
+        {LIBELLES_CARTE[carte.type]} · {THEMES[carte.theme].libelle}
+      </span>
+      <button type="button" className="surface__fermer" aria-label="Fermer la carte" onClick={fermer}>
+        ×
+      </button>
+    </div>
   )
 
-  function rendre(contenu: Contenu) {
-    if (contenu === 'dos') return <FaceDos carte={carte} />
-
-    if (contenu === 'question') {
-      return (
-        <div className={`surface surface--${carte.type} question`}>
-          <div className="surface__entete">
-            {entete}
-            <button
-              type="button"
-              className="surface__fermer"
-              aria-label="Remettre la carte dans le paquet"
-              onClick={remettre}
-            >
-              ×
-            </button>
-          </div>
-          <p className="question__intitule">{question.intitule}</p>
-          <div className="question__options">
-            {question.options.map((o) => (
-              <button
-                key={o.id}
-                type="button"
-                className="option"
-                onClick={() => repondre(o.id)}
-              >
-                {o.libelle}
-              </button>
-            ))}
-          </div>
-          <p className="surface__note">Contenu de démonstration</p>
-        </div>
-      )
-    }
-
-    const verdict = carte.type === 'avis' ? 'Avis noté' : option?.juste ? 'Bonne réponse' : 'Pas tout à fait'
-    const suite =
-      carte.type === 'avis'
-        ? `Tu as répondu « ${option?.libelle} ». La carte rejoint ta collection.`
-        : option?.juste
-          ? 'La carte rejoint ta collection.'
-          : `La bonne réponse : ${bonne?.libelle}. La carte retourne dans le paquet pour plus tard.`
-
+  function rendreQuestion() {
+    const options =
+      carte.type === 'avis' ? [...carte.options, { id: JE_NE_SAIS_PAS, libelle: 'Je ne sais pas' }] : carte.options
     return (
-      <div className={`surface surface--${carte.type} explication`}>
-        <div className="surface__entete">{entete}</div>
-        <p className="explication__verdict">{verdict}</p>
-        <p className="explication__suite">{suite}</p>
-        <p className="explication__contexte">{question.contexte}</p>
-        <p className="explication__source">Source : {question.source}</p>
-        <button
-          type="button"
-          className="explication__action"
-          onClick={collectee ? ranger : remettre}
-        >
-          {collectee ? 'Ranger dans ma collection' : 'Remettre dans le paquet'}
-        </button>
+      <div className={`surface surface--${carte.type} question`}>
+        {entete}
+        <p className="question__intitule">{carte.question}</p>
+        <div className="question__options">
+          {options.map((o) => (
+            <button key={o.id} type="button" className="option" onClick={() => repondre(o.id)}>
+              {o.libelle}
+            </button>
+          ))}
+        </div>
       </div>
     )
   }
 
+  function rendreReponse() {
+    if (carte.type === 'savoir') {
+      const choisie = carte.options.find((o) => o.id === choix)
+      const juste = choisie?.juste === true
+      return (
+        <div className="surface surface--savoir reponse">
+          {entete}
+          {mode === 'revision' ? (
+            <p className="reponse__question">{carte.question}</p>
+          ) : (
+            <p className="reponse__verdict">{juste ? 'Bien vu !' : 'Raté !'}</p>
+          )}
+          {!juste && choisie && <p className="reponse__ligne">Tu as répondu : {choisie.libelle}</p>}
+          <p className="reponse__ligne">
+            Réponse : <strong>{bonne?.libelle}</strong>
+          </p>
+          <p className="reponse__texte">{carte.explication}</p>
+          <PlusLoin fiches={carte.fiches} sources={carte.sources} />
+          {mode === 'jeu' && juste && (
+            <button type="button" className="reponse__action" onClick={ajouter}>
+              Ajouter à ma collection
+            </button>
+          )}
+        </div>
+      )
+    }
+
+    const choisie = carte.options.find((o) => o.id === choix)
+    const fichesPartis = (choisie?.partis ?? []).map((p): IdFiche => `parti-${p}`)
+    return (
+      <div className="surface surface--avis reponse">
+        {entete}
+        <p className="reponse__verdict">Avis noté</p>
+        <p className="reponse__ligne">
+          Ta réponse : <strong>{choisie ? `« ${choisie.libelle} »` : 'Je ne sais pas'}</strong>
+        </p>
+        {!choisie ? (
+          <p className="reponse__ligne">Pas de souci : cette carte ne compte pas dans ta position.</p>
+        ) : fichesPartis.length > 0 ? (
+          <>
+            <p className="reponse__ligne">Elle rejoint le programme de :</p>
+            <LiensFiches ids={fichesPartis} />
+          </>
+        ) : (
+          <p className="reponse__ligne">Aucun parti ne porte exactement cette position dans nos sources.</p>
+        )}
+        <p className="reponse__texte">{carte.contexte}</p>
+        <PlusLoin fiches={carte.fiches} sources={carte.sources} />
+        <p className="surface__note">Ta position évolue dans ta collection, onglet « Mes avis ».</p>
+      </div>
+    )
+  }
+
+  function rendre(contenu: Contenu) {
+    if (contenu === 'dos') return <FaceDos carte={carte} />
+    return contenu === 'question' ? rendreQuestion() : rendreReponse()
+  }
+
   return (
-    <div
-      className="ouverture"
-      role="dialog"
-      aria-modal="true"
-      aria-label={`Carte ${carte.theme}`}
-    >
+    <div className="ouverture" role="dialog" aria-modal="true" aria-label={`Carte ${THEMES[carte.theme].libelle}`}>
       <div ref={voile} className="ouverture__voile" />
       <div ref={cadre} className="ouverture__cadre" tabIndex={-1}>
         <div ref={boite} className="ouverture__carte">

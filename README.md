@@ -40,8 +40,11 @@ npm run generate-splash     # régénérer les écrans de démarrage iOS (couleu
 | `src/pages` | Écrans de l'app |
 | `src/components` | Composants d'interface réutilisables |
 | `src/features/paquet` | Le paquet de cartes (écran principal) |
+| `src/features/collection` | Ma collection : savoir et avis, progression enregistrée sur l'appareil |
+| `src/features/position` | Calcul de la position politique (cartes Avis) |
+| `src/features/fiches` | Fiches partis, personnalités, sujets |
 | `src/features/*` | Fonctionnalités à venir : profil, dataviz, filtres, comparateur |
-| `src/data` | Types des données (`types.ts`) |
+| `src/data` | Types et contenu : partis, programmes 2027, votes, cartes, fiches |
 | `src/lib` | Fonctions utilitaires |
 | `src/styles` | Tokens de design et styles globaux |
 | `public/data` | Données statiques (JSON) |
@@ -51,6 +54,12 @@ Chaque dossier contient un `README.md` qui détaille son rôle.
 ## Couleur de lancement
 
 `lancement.json` fixe la couleur du fond et du logo au démarrage (écran de lancement, splash screen, barre d'état). Après un changement, lancer `npm run generate-splash` pour les écrans de démarrage iOS.
+
+## Contenu
+
+- `src/data/programmes.ts` et `src/data/votes.ts` : propositions 2027 des dix partis et votes à l'Assemblée (2022-2026), d'après les documents compilés par la classe, avec leurs liens.
+- `src/data/cartes/savoir.ts` (QCM) et `src/data/cartes/avis.ts` (opinions) : cartes rédigées avec l'IA à partir de ces sources, à relire par l'équipe.
+- `src/data/fiches.ts` : fiches « Pour aller plus loin ».
 
 ## Règle sur les données
 

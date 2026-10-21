@@ -18,6 +18,9 @@ Consignes pour l'assistant IA sur ce dépôt.
 - Palette provisoire neutre. Jamais d'orange, de corail ni de terracotta. Contraste AA minimum.
 - Accessibilité : HTML sémantique, `lang="fr"`, focus visible, lisible sur mobile.
 - Données : chaque donnée affichée a une source (URL + date de consultation), cf. `src/data/types.ts`.
+- Contenu politique : uniquement des faits présents dans les sources ; jamais d'URL inventée ; même traitement pour chaque parti ; pas d'affaires judiciaires sans condamnation définitive et deux sources.
+- Cartes Avis : un parti n'est associé à une réponse que si son programme va clairement dans ce sens (la position politique en dépend).
+- App 100 % tactile : pas d'état :hover ni :active, un tap = une action.
 - Le service worker ne doit mettre en cache que les fichiers statiques de l'app, pas `public/data`.
 
 ## Commandes

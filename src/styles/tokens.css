@@ -18,11 +18,16 @@
   --color-beige: #cac3ad;
   --color-cream: #fff8ed;
 
+  /* Nuancier politique (position issue des cartes Avis) */
+  --color-gauche: #b3121f;
+  --color-droite: #1f4e8c;
+
   /* Noir et blanc (cartes, en attendant la DA) */
   --color-ink: #111111;
   --color-paper: #ffffff;
   --color-paper-dim: #f0f0f0;
   --color-veil: rgb(240 240 240 / 0.88);
+  --color-scrim: rgb(17 18 15 / 0.45);
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.08), 0 24px 48px -24px rgb(0 0 0 / 0.45);
 
   /* Typographie */

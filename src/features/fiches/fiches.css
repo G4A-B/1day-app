@@ -1,0 +1,156 @@
+/* « Pour aller plus loin » : pastilles vers les fiches, liste des sources. Suivent la couleur du texte. */
+
+.plus-loin {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.plus-loin__titre {
+  margin: var(--space-2) 0 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.liens-fiches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.liens-fiches__lien {
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  border: 1.5px solid currentColor;
+  border-radius: var(--radius-full);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.liste-sources {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.liste-sources a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+.liste-sources__date {
+  opacity: 0.7;
+}
+
+/* ---------- Fiche, par-dessus l'écran en cours ---------- */
+
+.fiche {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.fiche__voile {
+  position: absolute;
+  inset: 0;
+  background: var(--color-scrim);
+  animation: fiche-voile 300ms ease-out;
+}
+
+.fiche__panneau {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  max-height: 88dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--space-4) max(var(--space-5), env(safe-area-inset-bottom));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  animation: fiche-entree 360ms cubic-bezier(0.22, 0.8, 0.2, 1);
+}
+
+.fiche__entete {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-2);
+  background: var(--color-paper);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fiche__fermer {
+  width: 44px;
+  height: 44px;
+  margin-right: -12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 1.75rem;
+  cursor: pointer;
+}
+
+.fiche__titre {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-tight);
+}
+
+.fiche__sous-titre {
+  margin: calc(var(--space-2) * -1) 0 0;
+  color: var(--color-text-muted);
+}
+
+.fiche__resume {
+  margin: 0;
+  font-size: 1.0625rem;
+}
+
+.fiche__points {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+@keyframes fiche-entree {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fiche-voile {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fiche__panneau,
+  .fiche__voile {
+    animation: none;
+  }
+}

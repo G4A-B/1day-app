@@ -1,15 +1,14 @@
-import { LIBELLES, type CarteDemo } from './cartes'
+import { LIBELLES_CARTE, numeroCarte } from '../../data/contenu'
+import { THEMES } from '../../data/themes'
+import type { Carte } from '../../data/types'
 
 /** Dos d'une carte : type, thème, numéro. Les tailles suivent la largeur de la carte (unités cqi). */
-export function FaceDos({ carte, collectee = false }: { carte: CarteDemo; collectee?: boolean }) {
+export function FaceDos({ carte }: { carte: Carte }) {
   return (
     <div className={`surface surface--${carte.type} dos`}>
-      <span className="dos__type">{LIBELLES[carte.type]}</span>
-      <span className="dos__theme">{carte.theme}</span>
-      <span className="dos__pied">
-        <span>n° {String(carte.id).padStart(2, '0')}</span>
-        {collectee && <span>✓ Collectée</span>}
-      </span>
+      <span className="dos__type">{LIBELLES_CARTE[carte.type]}</span>
+      <span className="dos__theme">{THEMES[carte.theme].libelle}</span>
+      <span className="dos__pied">n° {numeroCarte(carte)}</span>
     </div>
   )
 }

@@ -13,7 +13,8 @@ registerSW({
   onRegisteredSW(_url, registration) {
     if (!registration) return
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') void registration.update()
+      // Hors connexion, la vérification échoue sans conséquence.
+      if (document.visibilityState === 'visible') registration.update().catch(() => undefined)
     })
   },
 })

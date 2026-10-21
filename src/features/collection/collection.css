@@ -1,0 +1,259 @@
+/*
+ * Ma collection : cartes Savoir à revoir, et position politique (onglet Avis).
+ * Sur l'onglet Avis, le fond suit le nuancier : neutre au début, rouge vers la gauche,
+ * bleu vers la droite (calculé dans Collection.tsx).
+ */
+
+.collection {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  --fond-collection: var(--color-paper-dim);
+  --encre-collection: var(--color-ink);
+  padding: 0 var(--space-3) max(var(--space-5), env(safe-area-inset-bottom));
+  background: var(--fond-collection);
+  color: var(--encre-collection);
+  transition:
+    background-color 600ms ease,
+    color 600ms ease;
+  animation: collection-entree 320ms cubic-bezier(0.22, 0.8, 0.2, 1);
+}
+
+@keyframes collection-entree {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+.collection__entete {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-top: max(var(--space-2), env(safe-area-inset-top));
+}
+
+.collection__retour {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-left: -10px;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.collection__titre {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.collection__onglets {
+  display: flex;
+  margin: var(--space-3) 0;
+  padding: 3px;
+  border: 1.5px solid currentColor;
+  border-radius: var(--radius-full);
+}
+
+.collection__onglets button {
+  flex: 1;
+  min-height: 44px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Onglet actif : couleurs inversées (texte de la couleur du fond). */
+.collection__onglets button[aria-selected='true'] {
+  background: var(--encre-collection);
+  color: var(--fond-collection);
+}
+
+.collection__vide {
+  margin: var(--space-5) 0;
+  text-align: center;
+}
+
+/* ---------- Savoir : grille de cartes ---------- */
+
+.collection__grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vignette {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  container-type: inline-size;
+  cursor: pointer;
+}
+
+.vignette--mini {
+  flex: 0 0 56px;
+  width: 56px;
+}
+
+/* ---------- Avis : position et nuancier ---------- */
+
+.position {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.position__titre,
+.position__sous-titre {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.position__sous-titre {
+  margin-top: var(--space-3);
+}
+
+.position__libelle {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.nuancier {
+  position: relative;
+  height: 12px;
+  margin-top: var(--space-3);
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--color-gauche), var(--color-paper) 50%, var(--color-droite));
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.nuancier__repere {
+  position: absolute;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  border: 3px solid var(--color-paper);
+  border-radius: var(--radius-full);
+  background: var(--color-ink);
+  transform: translate(-50%, -50%);
+  transition: left 600ms ease;
+}
+
+.nuancier__legende {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+}
+
+.position__partis {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding-left: 1.4em;
+}
+
+.position__partis button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.position__methode {
+  margin-top: var(--space-2);
+  font-size: 0.875rem;
+}
+
+.position__methode summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.position__methode p {
+  margin: 0 0 var(--space-2);
+}
+
+.avis-liste {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.avis-liste__ligne {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  width: 100%;
+  padding: var(--space-2);
+  border: 1.5px solid currentColor;
+  border-radius: var(--radius-md);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.avis-liste__texte {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.avis-liste__question {
+  font-weight: var(--font-weight-bold);
+  line-height: 1.3;
+}
+
+.avis-liste__reponse {
+  font-size: 0.875rem;
+}
+
+.collection__effacer {
+  display: block;
+  min-height: 44px;
+  margin: var(--space-5) auto 0;
+  padding: 0 var(--space-4);
+  border: 1.5px solid currentColor;
+  border-radius: var(--radius-full);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collection {
+    animation: none;
+  }
+}
