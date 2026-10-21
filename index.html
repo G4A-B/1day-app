@@ -12,6 +12,24 @@
       name="description"
       content="1day-app aide les étudiant·es à comprendre les enjeux des prochaines élections françaises pour faire des choix éclairés."
     />
+    <script>
+      // Filet de sécurité PWA : si un fichier de l'app ne se charge pas (ancienne
+      // version encore en cache), on retire le service worker et on recharge
+      // une fois depuis le réseau pour récupérer la nouvelle version.
+      addEventListener('error', function (e) {
+        var t = e.target
+        if (!t || (t.tagName !== 'SCRIPT' && t.tagName !== 'LINK')) return
+        try {
+          if (sessionStorage.getItem('rechargement-pwa')) return
+          sessionStorage.setItem('rechargement-pwa', '1')
+        } catch (_) { return }
+        var recharger = function () { location.reload() }
+        if (!navigator.serviceWorker) return recharger()
+        navigator.serviceWorker.getRegistrations()
+          .then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister() })) })
+          .then(recharger, recharger)
+      }, true)
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -9,7 +9,8 @@ export default defineConfig({
     VitePWA({
       // Le service worker se met à jour tout seul quand une nouvelle version est déployée
       registerType: 'autoUpdate',
-      injectRegister: 'auto',
+      // Enregistré dans src/main.tsx (rechargement automatique à chaque nouvelle version)
+      injectRegister: false,
       includeAssets: ['favicon.ico', 'icon.svg', 'apple-touch-icon-180x180.png'],
       manifest: {
         name: '1day-app - G4A',
@@ -41,6 +42,9 @@ export default defineConfig({
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [/^\/data\//],
         cleanupOutdatedCaches: true,
+        // La nouvelle version prend la main tout de suite (la page se recharge, cf. main.tsx)
+        skipWaiting: true,
+        clientsClaim: true,
       },
     }),
   ],
