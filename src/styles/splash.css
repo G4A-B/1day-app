@@ -1,0 +1,93 @@
+/*
+ * Splash screen : fond noir uni, le logo Poléa s'écrit lettre par lettre,
+ * l'accent tombe sur le « e », puis tout s'efface (≈ 1,6 s).
+ * Le balisage est dans index.html pour s'afficher avant le démarrage de React.
+ */
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: var(--color-black);
+  color: var(--color-cream);
+  animation: splash-sortie 380ms cubic-bezier(0.4, 0, 0.2, 1) 1250ms forwards;
+}
+
+.sans-splash .splash {
+  display: none;
+}
+
+.splash__logo {
+  width: min(56vw, 240px);
+  height: auto;
+  overflow: visible;
+  animation: splash-recul 380ms cubic-bezier(0.4, 0, 0.2, 1) 1250ms forwards;
+}
+
+.splash__lettre {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: splash-lettre 560ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: calc(100ms + var(--n) * 70ms);
+}
+
+.splash__accent {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: splash-accent 620ms cubic-bezier(0.3, 1.5, 0.5, 1) 560ms forwards;
+}
+
+@keyframes splash-lettre {
+  from {
+    opacity: 0;
+    transform: translateY(45%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes splash-accent {
+  from {
+    opacity: 0;
+    transform: translateY(-160%) rotate(-30deg);
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes splash-recul {
+  to {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes splash-sortie {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash__lettre,
+  .splash__accent {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+
+  .splash,
+  .splash__logo {
+    animation-delay: 700ms;
+  }
+}

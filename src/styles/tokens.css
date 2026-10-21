@@ -12,6 +12,12 @@
   --color-border: #d4d4d4;
   --color-focus: #111111;
 
+  /* Palette Poléa (DA). Le jaune de la planche n'est pas retenu. */
+  --color-black: #11120f;
+  --color-olive: #46483f;
+  --color-beige: #cac3ad;
+  --color-cream: #fff8ed;
+
   /* Noir et blanc (prototypes du labo) */
   --color-ink: #111111;
   --color-paper: #ffffff;

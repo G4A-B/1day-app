@@ -11,18 +11,18 @@ export default defineConfig({
       registerType: 'autoUpdate',
       // Enregistré dans src/main.tsx (rechargement automatique à chaque nouvelle version)
       injectRegister: false,
-      includeAssets: ['favicon.ico', 'icon.svg', 'apple-touch-icon-180x180.png'],
+      includeAssets: ['favicon.ico', 'icon.svg', 'logo.svg', 'apple-touch-icon-180x180.png'],
       manifest: {
-        name: '1day-app - G4A',
-        short_name: '1day-app',
-        description:
-          'Comprendre les enjeux des prochaines élections françaises pour faire des choix éclairés.',
+        name: 'Poléa',
+        short_name: 'Poléa',
+        description: 'Comprendre les enjeux de l’élection présidentielle pour faire des choix éclairés.',
         lang: 'fr',
         display: 'standalone',
         start_url: '/',
         scope: '/',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
+        // Noir Poléa : écran de lancement Android et barre d'état
+        theme_color: '#11120f',
+        background_color: '#11120f',
         icons: [
           { src: 'pwa-64x64.png', sizes: '64x64', type: 'image/png' },
           { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
@@ -38,7 +38,7 @@ export default defineConfig({
       workbox: {
         // Uniquement les fichiers statiques de l'app (pas les données de public/data)
         globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest}'],
-        globIgnores: ['data/**'],
+        globIgnores: ['data/**', 'splash/**'],
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [/^\/data\//],
         cleanupOutdatedCaches: true,

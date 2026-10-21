@@ -1,8 +1,8 @@
-# 1day-app
+# Poléa (1day-app)
 
 Projet de la classe **G4A** (LISAA, octobre 2026).
 
-1day-app aide les étudiant·es qui ont du mal à comprendre les enjeux des prochaines élections françaises à s'informer et à faire des choix éclairés.
+Poléa aide les étudiant·es qui ont du mal à comprendre les enjeux des prochaines élections françaises à s'informer et à faire des choix éclairés.
 
 **Site en ligne :** _URL Vercel à compléter_ — `https://…vercel.app`
 
@@ -23,6 +23,7 @@ npm run dev                 # lancer le site en local, avec rechargement automat
 npm run build               # fabriquer la version de production dans dist/
 npm run preview             # tester localement la version de production
 npm run generate-pwa-assets # régénérer les icônes PNG à partir de public/icon.svg
+npm run generate-splash     # régénérer les écrans de démarrage iOS (fond noir Poléa)
 ```
 
 ## Workflow
