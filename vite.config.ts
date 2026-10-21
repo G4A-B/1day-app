@@ -1,11 +1,18 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import lancement from './lancement.json' with { type: 'json' }
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    // Couleurs de lancement (lancement.json) injectées dans index.html
+    {
+      name: 'couleurs-lancement',
+      transformIndexHtml: (html) =>
+        html.replaceAll('%FOND_LANCEMENT%', lancement.fond).replaceAll('%LOGO_LANCEMENT%', lancement.logo),
+    },
     VitePWA({
       // Le service worker se met à jour tout seul quand une nouvelle version est déployée
       registerType: 'autoUpdate',
@@ -20,9 +27,9 @@ export default defineConfig({
         display: 'standalone',
         start_url: '/',
         scope: '/',
-        // Noir Poléa : écran de lancement Android et barre d'état
-        theme_color: '#11120f',
-        background_color: '#11120f',
+        // Écran de lancement Android et barre d'état au démarrage (lancement.json)
+        theme_color: lancement.fond,
+        background_color: lancement.fond,
         icons: [
           { src: 'pwa-64x64.png', sizes: '64x64', type: 'image/png' },
           { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },

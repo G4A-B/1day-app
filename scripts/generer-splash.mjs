@@ -1,11 +1,11 @@
-// Génère les écrans de démarrage iOS (fond noir Poléa uni, un par taille d'iPhone)
-// et insère les balises <link> correspondantes dans index.html.
-// Commande : npm run generate-splash
+// Génère les écrans de démarrage iOS (fond uni, couleur de lancement.json, un par taille
+// d'iPhone) et insère les balises <link> correspondantes dans index.html.
+// Commande : npm run generate-splash (à relancer si la couleur de lancement change)
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { appleSplashScreenSizes } from '@vite-pwa/assets-generator/config'
 import sharp from 'sharp'
 
-const FOND = '#11120f'
+const { fond: FOND } = JSON.parse(await readFile('lancement.json', 'utf8'))
 const DOSSIER = 'public/splash'
 const DEBUT = '<!-- splash:debut -->'
 const FIN = '<!-- splash:fin -->'

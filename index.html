@@ -1,12 +1,24 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" class="lancement">
   <head>
     <meta charset="UTF-8" />
+    <style>
+      /* Couleurs de lancement (lancement.json), appliquées avant tout chargement :
+         pas d'écran blanc entre l'icône et le splash screen. */
+      :root {
+        --color-launch: %FOND_LANCEMENT%;
+        --color-launch-logo: %LOGO_LANCEMENT%;
+      }
+      html.lancement,
+      html.lancement body {
+        background: var(--color-launch);
+      }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
-    <meta name="theme-color" content="#11120f" />
+    <meta name="theme-color" content="%FOND_LANCEMENT%" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Poléa" />

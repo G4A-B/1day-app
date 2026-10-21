@@ -23,7 +23,7 @@ npm run dev                 # lancer le site en local, avec rechargement automat
 npm run build               # fabriquer la version de production dans dist/
 npm run preview             # tester localement la version de production
 npm run generate-pwa-assets # régénérer les icônes PNG à partir de public/icon.svg
-npm run generate-splash     # régénérer les écrans de démarrage iOS (fond noir Poléa)
+npm run generate-splash     # régénérer les écrans de démarrage iOS (couleur de lancement.json)
 ```
 
 ## Workflow
@@ -39,14 +39,18 @@ npm run generate-splash     # régénérer les écrans de démarrage iOS (fond n
 | --- | --- |
 | `src/pages` | Écrans de l'app |
 | `src/components` | Composants d'interface réutilisables |
-| `src/features/*` | Fonctionnalités : profil, dataviz, filtres, comparateur |
+| `src/features/paquet` | Le paquet de cartes (écran principal) |
+| `src/features/*` | Fonctionnalités à venir : profil, dataviz, filtres, comparateur |
 | `src/data` | Types des données (`types.ts`) |
 | `src/lib` | Fonctions utilitaires |
 | `src/styles` | Tokens de design et styles globaux |
-| `src/labo` | Prototypes d'animation, accessibles sur `/labo` |
 | `public/data` | Données statiques (JSON) |
 
 Chaque dossier contient un `README.md` qui détaille son rôle.
+
+## Couleur de lancement
+
+`lancement.json` fixe la couleur du fond et du logo au démarrage (écran de lancement, splash screen, barre d'état). Après un changement, lancer `npm run generate-splash` pour les écrans de démarrage iOS.
 
 ## Règle sur les données
 

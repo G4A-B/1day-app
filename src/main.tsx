@@ -4,6 +4,7 @@ import { registerSW } from 'virtual:pwa-register'
 import './styles/global.css'
 import './styles/splash.css'
 import App from './App.tsx'
+import { colorerBarreEtatSelonEcran } from './lib/barreEtat'
 
 // Service worker : la page se recharge toute seule quand une nouvelle version
 // est déployée. On vérifie aussi à chaque retour sur l'app (PWA mise en arrière-plan).
@@ -24,11 +25,26 @@ try {
   // stockage indisponible (navigation privée) : rien à faire
 }
 
+// Fin du lancement : la page quitte la couleur de lancement et la barre d'état
+// prend la couleur de l'écran affiché.
+function finirLancement() {
+  document.documentElement.classList.remove('lancement')
+  colorerBarreEtatSelonEcran()
+}
+
 // Splash screen (index.html) : retiré du DOM une fois son animation de sortie terminée.
 const splash = document.getElementById('splash')
-splash?.addEventListener('animationend', (e) => {
-  if (e.target === splash) splash.remove()
-})
+if (splash && !document.documentElement.classList.contains('sans-splash')) {
+  splash.addEventListener('animationend', (e) => {
+    if (e.target !== splash) return
+    splash.remove()
+    finirLancement()
+  })
+} else {
+  splash?.remove()
+  // Après le premier affichage de React
+  requestAnimationFrame(() => requestAnimationFrame(finirLancement))
+}
 try {
   sessionStorage.setItem('splash-vu', '1')
 } catch {
