@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>1day-app</title>
+  <rect width="512" height="512" fill="#111111"/>
+  <g fill="#ffffff" transform="translate(-21 0)">
+    <path d="M118 196 L178 150 H222 V362 H170 V214 L140 236 Z"/>
+    <path fill-rule="evenodd" d="M262 150 H330 A106 106 0 0 1 330 362 H262 Z M312 200 V312 H330 A56 56 0 0 0 330 200 Z"/>
+  </g>
+</svg>
