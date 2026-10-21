@@ -14,3 +14,10 @@ build/
 
 # Logs
 *.log
+dist-ssr/
+*.local
+
+# Éditeurs
+.vscode/*
+!.vscode/extensions.json
+.idea
